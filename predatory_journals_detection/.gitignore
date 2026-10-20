@@ -1,0 +1,22 @@
+# Large legacy files exceeding GitHub 100MB limit
+preprocess/tfidf_old_version/*.npy
+preprocess/tfidf_old_version/*.csv
+*.npy
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

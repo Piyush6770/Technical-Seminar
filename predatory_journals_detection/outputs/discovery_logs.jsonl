@@ -1,0 +1,48 @@
+{"timestamp": "2026-10-12 22:23:05", "event_type": "PIPELINE_START", "details": {"initial_candidates_count": 0}}
+{"timestamp": "2026-10-12 22:23:05", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 1, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:06", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 2, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:07", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 3, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:08", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 4, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:09", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 5, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:10", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 6, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:11", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 7, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:12", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 8, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:13", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 9, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:14", "event_type": "DOAJ_PAGE_COMPLETED", "details": {"page": 10, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:15", "event_type": "HTTP_ERROR", "details": {"url": "https://doaj.org/api/search/journals/bibjson.oa_start:%5B2021%20TO%202026%5D?page=11&pageSize=100", "code": 400, "attempt": 1}}
+{"timestamp": "2026-10-12 22:23:17", "event_type": "HTTP_ERROR", "details": {"url": "https://doaj.org/api/search/journals/bibjson.oa_start:%5B2021%20TO%202026%5D?page=11&pageSize=100", "code": 400, "attempt": 2}}
+{"timestamp": "2026-10-12 22:23:19", "event_type": "HTTP_ERROR", "details": {"url": "https://doaj.org/api/search/journals/bibjson.oa_start:%5B2021%20TO%202026%5D?page=11&pageSize=100", "code": 400, "attempt": 3}}
+{"timestamp": "2026-10-12 22:23:25", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 1, "fetched": 100, "added": 98}}
+{"timestamp": "2026-10-12 22:23:27", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 2, "fetched": 100, "added": 98}}
+{"timestamp": "2026-10-12 22:23:30", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 3, "fetched": 100, "added": 99}}
+{"timestamp": "2026-10-12 22:23:32", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 4, "fetched": 100, "added": 98}}
+{"timestamp": "2026-10-12 22:23:35", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 5, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:39", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 6, "fetched": 100, "added": 97}}
+{"timestamp": "2026-10-12 22:23:42", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 7, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:23:45", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 8, "fetched": 100, "added": 99}}
+{"timestamp": "2026-10-12 22:23:48", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 9, "fetched": 100, "added": 95}}
+{"timestamp": "2026-10-12 22:23:50", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 10, "fetched": 100, "added": 98}}
+{"timestamp": "2026-10-12 22:23:52", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 11, "fetched": 100, "added": 98}}
+{"timestamp": "2026-10-12 22:23:55", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 12, "fetched": 100, "added": 99}}
+{"timestamp": "2026-10-12 22:23:58", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 13, "fetched": 100, "added": 97}}
+{"timestamp": "2026-10-12 22:24:01", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 14, "fetched": 100, "added": 97}}
+{"timestamp": "2026-10-12 22:24:04", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 15, "fetched": 100, "added": 99}}
+{"timestamp": "2026-10-12 22:24:07", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 16, "fetched": 100, "added": 97}}
+{"timestamp": "2026-10-12 22:24:08", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 17, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:24:11", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 18, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:24:13", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 19, "fetched": 100, "added": 97}}
+{"timestamp": "2026-10-12 22:24:16", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 20, "fetched": 100, "added": 97}}
+{"timestamp": "2026-10-12 22:24:18", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 21, "fetched": 100, "added": 100}}
+{"timestamp": "2026-10-12 22:24:21", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 22, "fetched": 100, "added": 98}}
+{"timestamp": "2026-10-12 22:24:24", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 23, "fetched": 100, "added": 99}}
+{"timestamp": "2026-10-12 22:24:26", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 24, "fetched": 100, "added": 98}}
+{"timestamp": "2026-10-12 22:24:29", "event_type": "OPENALEX_PAGE_COMPLETED", "details": {"page": 25, "fetched": 100, "added": 97}}
+{"timestamp": "2026-10-12 22:24:31", "event_type": "TARGETED_QUERY_COMPLETED", "details": {"query": "International Journal of Recent", "added": 6}}
+{"timestamp": "2026-10-12 22:24:34", "event_type": "TARGETED_QUERY_COMPLETED", "details": {"query": "International Journal of Advanced", "added": 43}}
+{"timestamp": "2026-10-12 22:24:37", "event_type": "TARGETED_QUERY_COMPLETED", "details": {"query": "World Journal of", "added": 47}}
+{"timestamp": "2026-10-12 22:24:39", "event_type": "TARGETED_QUERY_COMPLETED", "details": {"query": "Global Journal of", "added": 44}}
+{"timestamp": "2026-10-12 22:24:42", "event_type": "TARGETED_QUERY_COMPLETED", "details": {"query": "Universal Journal of", "added": 28}}
+{"timestamp": "2026-10-12 22:24:44", "event_type": "TARGETED_QUERY_COMPLETED", "details": {"query": "European Journal of Applied", "added": 4}}
+{"timestamp": "2026-10-12 22:24:45", "event_type": "TARGETED_QUERY_COMPLETED", "details": {"query": "Asian Journal of Multidisciplinary", "added": 2}}
+{"timestamp": "2026-10-12 22:24:47", "event_type": "TARGETED_QUERY_COMPLETED", "details": {"query": "International Journal of Current", "added": 15}}
+{"timestamp": "2026-10-12 22:24:48", "event_type": "PIPELINE_COMPLETE", "details": {"total_raw_candidates": 3644}}
