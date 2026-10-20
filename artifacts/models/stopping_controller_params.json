@@ -1,0 +1,7 @@
+{
+  "tau_1": 0.8,
+  "tau_2": 0.8,
+  "tau_3": 0.75,
+  "lambda_penalty": 16.0,
+  "is_frozen": true
+}

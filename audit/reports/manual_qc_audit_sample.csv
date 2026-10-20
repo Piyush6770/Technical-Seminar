@@ -1,0 +1,76 @@
+stratum,journal_id,journal_title,journal_url,identity_agreement,launch_date_agreement,label_agreement,source_validity,duplicate_detected,error_category
+ORIGINAL_WHITELIST,229,BMJ Open Gastroenterology,http://bmjopengastro.bmj.com/,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,52,BMC Biophysics,http://bmcbiophys.biomedcentral.com,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,564,Journal of Healthcare Engineering,https://www.hindawi.com/journals/jhe/,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,502,Science and Technology of Advanced Materials,http://www.tandfonline.com/toc/tsta20/current,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,458,Open Forum Infectious Diseases,https://academic.oup.com/ofid,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,286,Advances in Urology,https://www.hindawi.com/journals/au/,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,210,International Journal of Cardiology: Heart & Vasculature,http://www.journals.elsevier.com/ijc-heart-and-vasculature/,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,1117,Biology of Sport,http://www.termedia.pl/Journal/Biology_of_Sport-78,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,179,Anemia,https://www.hindawi.com/journals/anemia/,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,1210,Particle and Fibre Toxicology,http://www.particleandfibretoxicology.com/,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,865,Frontiers in Neuroinformatics,http://www.frontiersin.org/neuroinformatics,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,66,Cells,http://www.mdpi.com/journal/cells,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,62,Journal of Biology,http://jbiol.com/home,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,192,Journal of the American Heart Association : Cardiovascular and Cerebrovascular Disease,http://jaha.ahajournals.org,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_WHITELIST,448,Annals of Occupational and Environmental Medicine,http://aoemj.biomedcentral.com,YES,YES (Pre-2021),YES (Legitimate in SCImago),YES,NO,NONE
+ORIGINAL_BLACKLIST,1452,Design by Free CSS Templates,http://www.ijaiem.org/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1731,www.ijprajournal.com,http://www.ijprajournal.com/index.html,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1830,www.ijtrd.com,http://www.ijtrd.com/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1241,Home,http://ambs-journal.co.uk/,PARTIAL (Scraped title artifact),YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,SCRAPED_HEADER_INSTEAD_OF_TITLE
+ORIGINAL_BLACKLIST,1788,IJSEA,http://www.ijsea.com/index,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1417,"font-family: 'Barlow', sans-serif;",http://www.ijana.in/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1947,JNASCI: The Journal of Novel Applied Sciences,http://jnasci.org/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1879,Journal of Applied Pharmaceutical Science,http://www.japsonline.com/index.php,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1932,Journal of Innovations in Pharmaceutical and Biological Sciences - JIPBS,http://www.jipbs.com/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1772,ijrect.com,http://ijrect.com/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1643,IJIRCT - International Journal,http://www.ijirct.org/index.php,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1439,International Journal of Advances in Engineering &amp; Technology - IJAET,http://www.ijaet.org/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1673,International Journal of Liberal Arts and Social Science | Open Access Journal,http://www.ijlass.org/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1817,IJSSH,http://www.ijssh.org/,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+ORIGINAL_BLACKLIST,1498,IJCATR,http://www.ijcat.com/Default,YES,YES (Pre-2021),YES (Listed on SPJ / Bealls List),YES,NO,NONE
+POST2020_LEGITIMATE,2060,COPD,https://www.tandfonline.com/journals/icop,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,5160,Journal of Early Childhood Education Research,https://journal.fi/jecer,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2373,Journal of Bacteriology,https://journals.asm.org/journal/jb,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,4757,Romanian Military Thinking,,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2912,چشم‌انداز مدیریت صنعتی,https://jimp.sbu.ac.ir/,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2743,Journal of Dementia and Alzheimer's Disease,https://www.mdpi.com/journal/jdad,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2616,工程科学学报,https://cje.ustb.edu.cn/indexen.htm,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2365,Del Español,https://www.uhu.es/publicaciones/ojs/index.php/DLESPANOL,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2487,Policy Perspectives,https://www.plutojournals.com/policy-perspectives/,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,5182,Proceedings Series on Physical & Formal Sciences,,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2736,Zoonoses,https://zoonoses-journal.org/,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2256,Indonesia Media Law Review,https://journal.unnes.ac.id/journals/imrev,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2236,Qainar Journal of Social Science,https://www.journal-kainar.kz/,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2825,Iraqi Literary and Cultural Review,https://ilcr.ibirc-center.co.uk/index.php/journal,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_LEGITIMATE,2245,Human Factors in Healthcare,https://www.sciencedirect.com/journal/human-factors-in-healthcare,YES (DOAJ / Recognized Publisher),YES (oa_start >= 2021),YES (Meets DOAJ / Indexing criteria),YES,NO,NONE
+POST2020_PREDATORY,5433,Journal of World Future Medicine Health and Nursing,,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5430,World Journal of Clinical Medicine,,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5503,Journal of Universal Community Empowerment Provision,https://psppjournals.org/index.php/jucep,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5408,Al-Hijr Journal of Adulearn World,,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5348,International Journal of Advanced Research in Future Ready Learning and Education,"{https://www.akademiabaru.com/submit/index.php/frle,https://depositori.pnm.gov.my/mydeposit/M22-00770e}",YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5462,Global Journal of Emerging AI and Computing,https://gjeac.com/index.php/GJEAIC,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5484,Universal Journal of Carbon Research,,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5370,International Journal of Advanced Research in Food Science and Agriculture Technology,,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5440,Global Journal of Agricultural Research,,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5359,International Journal of Advanced Science,https://jandoopress.com/journal/ijas,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5489,Universal Journal of Financial Economics,,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5416,Journal of World Economy,https://www.paradigmpress.org/JWE,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5509,European Journal of Applied Business and Management,https://nidisag.isag.pt/index.php/IJAM,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5507,Universal Technical Journal of Lumbini International Academy of Science and Technology,https://www.nepjol.info/index.php/utjliast,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_PREDATORY,5435,World Journal of Agriculture and Forestry Sciences,https://upsjournals.com/wjafs,YES,YES (Registered post-2020),YES (Flagged publisher registry pattern),YES,NO,REQUIRES_EXPERT_VERIFICATION
+POST2020_UNLABELED,4624,Damu Journal of Sport Science,https://damujss.com/index.php/home,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),YES,NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3479,Proceedings,,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),PARTIAL (No homepage in metadata),NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,4995,Journal Of Responsible Tourism,,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),PARTIAL (No homepage in metadata),NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3134,International Journal of Innovative Research in Technology,,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),PARTIAL (No homepage in metadata),NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3074,Anusandhanvallari,https://psvmkendra.com/index.php/journal,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),YES,NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,4865,International Journal Of History And Political Sciences,https://inlibrary.uz/index.php/ijhps,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),YES,NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3585,Turkish Journal of Cerebrovascular Diseases,,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),PARTIAL (No homepage in metadata),NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,5203,Amicus curiae.,http://www.derecho.unam.mx/oferta-educativa/licenciatura/distancia/#amicus,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),YES,NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3757,Journal of Research in Science and Engineering,,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),PARTIAL (No homepage in metadata),NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3158,Medical Science,,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),PARTIAL (No homepage in metadata),NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3599,Research Horizon,https://journal.lifescifi.com/index.php/RH,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),YES,NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3210,Technical Education Science/Giáo dục Kỹ thuật,https://jte.edu.vn/index.php/jte,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),YES,NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,4038,Juremi Jurnal Riset Ekonomi,,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),PARTIAL (No homepage in metadata),NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,3726,International Journal of Technology and Education Research,https://e-journal.citakonsultindo.or.id/index.php/IJETER,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),YES,NO,UNLABELED_PENDING_MANUAL_REVIEW
+POST2020_UNLABELED,4255,Revue Européenne du Droit Social,,YES (OpenAlex Serial Record),LIKELY_POST_2020,UNRESOLVED (Lacks definitive index listing),PARTIAL (No homepage in metadata),NO,UNLABELED_PENDING_MANUAL_REVIEW

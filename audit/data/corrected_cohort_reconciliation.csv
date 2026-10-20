@@ -1,0 +1,5 @@
+cohort_name,description,total_records,legitimate_count,predatory_count,unlabeled_count,eligible_for_evaluation,leakage_risk
+HISTORICAL_TRAIN,Pre-2021 historical baseline dedicated strictly to representation learning and model optimization.,1636,970,666,0,NO_TRAINING_ONLY,ZERO_ISOLATED
+HISTORICAL_VAL,"Pre-2021 historical baseline dedicated to hyperparameter tuning, Platt probability calibration, and stopping policy threshold selection.",410,243,167,0,CALIBRATION_ONLY,ZERO_ISOLATED
+TEMPORAL_TEST_LABELED,Post-2020 verified serials with confirmed ground truth (DOAJ certified whitelists and predatory publisher registries). Strictly held out.,1800,1621,179,0,PRIMARY_TEMPORAL_BENCHMARK,ZERO_UNTOUCHED
+QUARANTINED_UNLABELED,Post-2020 serials confirmed to exist but lacking secondary index corroboration or blacklist listings. Quarantined to prevent label noise.,1682,0,0,1682,SEMI_SUPERVISED_ONLY,QUARANTINED_EXCLUDED_FROM_METRICS
