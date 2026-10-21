@@ -45,41 +45,49 @@ Predatory publishing, scholarly integrity, temporal generalization, cost-aware m
 \end{IEEEkeywords}
 
 \section{Introduction}
-\IEEEPARstart{T}{he} integrity of global academic research relies upon peer review as an impartial arbiter of scientific validity. Over the past fifteen years, however, the commercial transition toward author-facing Article Processing Charges (APCs) and rapid market expansions in Open Access publishing have incentivized a parallel economy of deceptive, fraudulent, and predatory academic journals~\cite{beall2012predatory, beall2015criteria, shen2015longitudinal, bjork2012open}. These publishing operations aggressively solicit manuscripts, promise perfunctory peer review within days, collect author fees, and publish unvetted manuscripts with little to no editorial oversight~\cite{bohannon2013who, cobey2018what}. The consequences of this phenomenon are severe: non-replicable clinical studies enter medical literature, pseudoscience attains nominal scholarly legitimacy, paper mills thrive~\cite{vence2022paper}, and public trust in research institutions is actively eroded~\cite{moher2017stop, gasparyan2016allure}.
+\IEEEPARstart{T}{he} integrity of global academic research relies upon peer review as an impartial arbiter of scientific validity. Over the past fifteen years, however, the commercial transition toward author-facing Article Processing Charges (APCs) and rapid market expansions in Open Access publishing have incentivized a parallel economy of deceptive, fraudulent, and predatory academic journals~\cite{beall2015criteria, shen2015longitudinal, bjork2012open}. These publishing operations aggressively solicit manuscripts, promise perfunctory peer review within days, collect author fees, and publish unvetted manuscripts with little to no editorial oversight~\cite{cobey2018what, grudniewicz2019predatory}. The consequences of this phenomenon are severe: non-replicable clinical studies enter medical literature, pseudoscience attains nominal scholarly legitimacy, paper mills thrive, and public trust in research institutions is actively eroded~\cite{moher2017stop}.
 
-In response to this crisis, researchers and information specialists initially relied upon manually curated blacklists, most notably Jeffrey Beall's pioneering list of potential predatory publishers~\cite{beall2012predatory, beall2015criteria}. While historically influential, manual blacklists suffer from notable operational weaknesses: they are labor-intensive to maintain, prone to subjective dispute, vulnerable to legal intimidation, and inherently reactive, lagging behind the creation of newly registered deceptive domains~\cite{eriksson2017false, strinzel2019blacklists}. This led the research community to develop automated machine-learning approaches capable of auditing journal websites based on structural, lexical, and bibliometric markers~\cite{dadkhah2016ranking, nctu2023baseline}.
+In response to this crisis, researchers and information specialists initially relied upon manually curated blacklists, most notably Jeffrey Beall's pioneering list of potential predatory publishers~\cite{beall2015criteria}. While historically influential, manual blacklists suffer from notable operational weaknesses: they are labor-intensive to maintain, prone to subjective dispute, vulnerable to legal intimidation, and inherently reactive, lagging behind the creation of newly registered deceptive domains. This led the research community to develop automated machine-learning approaches capable of auditing journal websites based on structural, lexical, and bibliometric markers. In a prominent effort to operationalize this vision, Chen et al.~\cite{chen2023open} deployed the Academic Journal Predatory Checking (AJPC) system, an open automation platform designed to distinguish suspected predatory journals from normal journals using single-page scraping and machine-learning models.
+
+However, recent independent audits have exposed deep foundational vulnerabilities in such automation systems. Most critically, Teixeira da Silva~\cite{teixeira2025variation} empirically evaluated the AJPC system across representative journals from ten of the world's largest publishers, revealing alarming failure modes:
+\begin{itemize}
+    \item \textbf{Intra-Journal Classification Inconsistency}: In 50\% of evaluated top-tier journals, AJPC's classification flipped between ``Normal Journal'' (NJ) and ``Suspected Predatory Journal'' (SPJ) depending solely on which internal URL was queried---the journal's homepage, its editorial board page, or its instructions for authors. For example, prominent legitimate serials (e.g., \textit{Learned Publishing}) were misclassified as suspected predatory when queried via their editorial or author instruction pages, while other serials flipped in reverse.
+    \item \textbf{Operational Server Fragility and Outages}: The monolithic architecture of the AJPC system subjected its central server (\texttt{140.113.207.51:8000}) to frequent crashes, timeouts, and multi-month downtimes, caused by the heavy resource exhaustion of synchronous, exhaustive web-scraping on every query.
+    \item \textbf{The Inflexible Top-Page Constraint}: Although AJPC's usage instructions required users to query only the top homepage, prospective authors realistically turn to author guidelines to evaluate fees or editorial board pages to check editor retractions. Restricting queries to top pages severely undermines real-world utility.
+    \item \textbf{Binary Misclassification and Lack of Evidence Grounding}: Forcing an uncalibrated binary verdict (NJ vs. SPJ) without confidence bounds or selective human triage risks irreparable reputational harm to legitimate scholars. As corroborated by Al-Moghrabi et al.~\cite{almoghrabi2024chatgpt}, automated models produce substantial false positive rates (up to 29\%) when lacking external corroboration, highlighting that scholarly legitimacy exists along a continuous multidimensional spectrum rather than a naive binary split. Furthermore, as demonstrated by Wu et al.~\cite{wu2024identification}, robust journal risk assessment requires multidimensional causal indicator systems (spanning impact timeliness, international cooperation, and review cycles) interpreted through explainable game-theoretic frameworks.
+\end{itemize}
 
 \subsection{The Three Structural Failure Modes in Current Literature}
-Recent papers reporting machine-learning architectures for predatory journal detection frequently report diagnostic metrics exceeding $95\%$ in precision, recall, and $F_1$-score~\cite{nctu2023baseline, bano2023automated}. Yet, despite these claims, librarians, tenure review committees, and national research funding bodies rarely rely upon automated classifiers in practice. Our investigation reveals that this disconnect stems from \textbf{three fundamental failure modes} pervasive in the existing literature:
+Recent papers reporting machine-learning architectures for predatory journal detection frequently report diagnostic metrics exceeding $95\%$ in precision, recall, and $F_1$-score~\cite{chen2023open}. Yet, despite these claims, librarians, tenure review committees, and national research funding bodies rarely rely upon automated classifiers in practice. Our investigation reveals that this disconnect stems from \textbf{three fundamental failure modes} pervasive in the existing literature:
 
 \begin{enumerate}
     \item \textbf{The Static Cross-Validation Fallacy}: Virtually all published classifiers evaluate performance using standard, identically distributed ($i.i.d.$) $k$-fold cross-validation on a static snapshot of historical records (typically derived from pre-2020 crawls of Beall's list and whitelisted directories). However, predatory publishing is an adversarial, non-stationary domain. Deceptive publishers continuously adapt their operational posture: post-2020 operations increasingly adopt modern publishing software (such as Open Journal Systems), register credible commercial or academic-sounding domain names, fabricate editorial board listings with real scholar identities, and publish professional APC fee schedules. Consequently, classifiers fitted on historical publishing heuristics suffer catastrophic performance degradation when confronted with newly established journals.
-    \item \textbf{The Uniform Acquisition Cost Fallacy}: Existing architectures operate under an exhaustive feature paradigm. To classify a journal, the pipeline assumes that all potential signals---ranging from URL character counts to headless browser DOM rendering and external registry API calls---are uniformly and instantaneously available at zero cost. In production environments, local URL string geometry takes less than $10$ milliseconds, whereas executing client-side JavaScript in a headless browser requires $3$ to $5$ seconds, and querying external scholarly registries (Crossref, OpenAlex, DOAJ, ISSN Portal) requires multiple network round-trips subject to latency, rate limiting, and API downtime. Indiscriminately invoking exhaustive acquisition for millions of academic serials is both financially and computationally unfeasible.
-    \item \textbf{The Ungrounded Black-Box Score Fallacy}: Existing models emit raw, uncalibrated scalar risk probabilities (e.g., $\hat{p} = 0.82$) without verifiable provenance or evidence grounding. In academic tenure disputes or legal proceedings, an ungrounded probability score provides zero actionable transparency. Decision-makers require verifiable provenance: Did the journal claim COPE membership that is contradicted by the official registry? Are editorial board members verifiable faculty at accredited universities? Furthermore, when evidence is noisy or ambiguous ($0.40 \le \hat{p} \le 0.60$), an autonomous system must be capable of \textit{selective abstention} (flagging the record for human expert review) rather than forcing an arbitrary algorithmic verdict.
+    \item \textbf{The Uniform Acquisition Cost and Server Exhaustion Fallacy}: Existing architectures operate under an exhaustive feature paradigm. To classify a journal, the pipeline assumes that all potential signals---ranging from URL character counts to headless browser DOM rendering and external registry API calls---are uniformly and instantaneously available at zero cost. In production environments, local URL string geometry takes less than $10$ milliseconds, whereas executing client-side JavaScript in a headless browser requires $3$ to $5$ seconds, and querying external scholarly registries (Crossref, OpenAlex, DOAJ, ISSN Portal) requires multiple network round-trips subject to latency, rate limiting, and API downtime. Synchronously invoking exhaustive acquisition crashes central servers (as witnessed in the AJPC downtime~\cite{teixeira2025variation}) and is computationally unfeasible.
+    \item \textbf{The Ungrounded Black-Box Score and Intra-Journal Inconsistency Fallacy}: Existing models emit raw, uncalibrated scalar risk probabilities without verifiable provenance, causing erratic intra-journal classification flips~\cite{teixeira2025variation}. In academic tenure disputes or legal proceedings, an ungrounded probability score provides zero actionable transparency. Decision-makers require verifiable provenance: Did the journal claim COPE membership that is contradicted by the official registry? Are editorial board members verifiable faculty at accredited universities? Furthermore, when evidence is noisy or ambiguous ($0.40 \le \hat{p} \le 0.60$), an autonomous system must be capable of \textit{selective abstention} (flagging the record for human expert review) rather than forcing an arbitrary algorithmic verdict.
 \end{enumerate}
 
 \subsection{Our Proposed Framework and Contributions}
-To resolve these structural challenges, this paper presents an end-to-end research framework that addresses predatory journal detection under longitudinal distribution shift, using adaptive progressive feature acquisition and multi-source evidence grounding. The major contributions of this work are as follows:
+To resolve the critical vulnerabilities uncovered by Teixeira da Silva~\cite{teixeira2025variation} in the AJPC system~\cite{chen2023open}, this paper presents an end-to-end research framework that addresses predatory journal detection under longitudinal distribution shift, using adaptive progressive feature acquisition, multi-source evidence grounding, and tri-state selective triage. The major contributions of this work are as follows:
 
 \begin{itemize}
     \item \textbf{First Longitudinal Temporal Generalization Benchmark}: We formulate predatory journal detection as an out-of-distribution temporal generalization problem across publication eras. We construct and freeze an audited corpus of $5,528$ records, separating an in-distribution historical baseline ($N=2,046$; pre-2021) from an untouched temporal test cohort of serials established between 2021 and 2026 ($N=1,800$). We empirically prove and quantify the temporal degradation ratio ($F_1^{\text{temporal}} / F_1^{\text{historical}} = 0.5354$), demonstrating why static benchmark evaluations fail in operational deployment.
-    \item \textbf{Cost-Aware Progressive Feature Acquisition Hierarchy}: We design a four-stage feature hierarchy organized by monotonically increasing acquisition latency: Stage 1 (URL geometry, $<0.01$s), Stage 2 (HTML policies, $\approx 0.8$s), Stage 3 (Dynamic JS, $\approx 3.5$s), and Stage 4 (Scholarly Registries, $\approx 5.0$s). An adaptive, entropy-bounded stopping controller evaluates calibrated confidence against incremental acquisition costs, reducing mean wall-clock latency by \textbf{94.4\%} while outperforming exhaustive acquisition on temporal test serials.
-    \item \textbf{Progressive Shared Multi-Head Neural Architecture}: Rather than training decoupled stage models, we design a shared progressive neural network that sequentially embeds feature representations across stages. We demonstrate that this representation sharing acts as an effective regularizer, preserving balanced discriminative capability where standard tabular models (Random Forest, XGBoost) collapse under temporal shift.
-    \item \textbf{Deterministic Provenance Grounding and Selective Abstention}: We couple statistical neural predictions with a deterministic registry corroboration engine, distinguishing verified facts from deceptive web assertions. The system enforces an automated abstention rule whenever confidence is ambiguous ($0.40 \le \hat{p} \le 0.60$) or when registry facts contradict public website claims.
-    \item \textbf{Interactive Demonstration System \& Open Artifacts}: We provide open-source code, trained model checkpoints, audited dataset cohorts frozen under SHA-256 digests, and an interactive Streamlit diagnostic dashboard supporting real-time single-journal inspection and high-throughput batch CSV auditing.
+    \item \textbf{Cost-Aware Progressive Feature Acquisition Hierarchy}: We design a four-stage feature hierarchy organized by monotonically increasing acquisition latency: Stage 1 (URL geometry, $<0.01$s), Stage 2 (HTML policies, $\approx 0.8$s), Stage 3 (Dynamic JS, $\approx 3.5$s), and Stage 4 (Scholarly Registries, $\approx 5.0$s). An adaptive, entropy-bounded stopping controller evaluates calibrated confidence against incremental acquisition costs, reducing mean wall-clock latency by \textbf{94.4\%} while outperforming exhaustive acquisition on temporal test serials and eliminating server resource exhaustion.
+    \item \textbf{Progressive Shared Multi-Head Neural Architecture}: Rather than training decoupled stage models or relying on isolated URLs, we design a shared progressive neural network that sequentially embeds feature representations across stages ($\phi_1 \to \phi_4$). This representation sharing acts as an effective regularizer, invariant to intra-journal entrance pages and preserving balanced discriminative capability where standard tabular models (Random Forest, XGBoost) collapse under temporal shift.
+    \item \textbf{Deterministic Provenance Grounding and Selective Abstention}: We couple statistical neural predictions with a deterministic registry corroboration engine, distinguishing verified facts from deceptive web assertions. The system enforces an automated abstention rule whenever confidence is ambiguous ($0.40 \le \hat{p} \le 0.60$) or when registry facts contradict public website claims, directly honoring the publishing continuum and eliminating harmful binary classification flipping.
+    \item \textbf{Interactive Demonstration System \& Open Artifacts}: We provide open-source code, trained model checkpoints, audited dataset cohorts frozen under SHA-256 digests, and an interactive demonstration dashboard supporting real-time single-journal inspection and high-throughput batch CSV auditing.
 \end{itemize}
 
 \section{Related Work}
 
 \subsection{The Evolution of Predatory Publishing Forensics}
-Since Jeffrey Beall first coined the term ``predatory publisher'' in 2012~\cite{beall2012predatory}, scholarly communication research has sought objective criteria to differentiate deceptive venues from legitimate open-access journals~\cite{severin2019guide}. In 2013, John Bohannon conducted a landmark sting operation by submitting a deliberately flawed cancer research manuscript to 304 open-access journals, finding that over half accepted the paper with minimal to no review~\cite{bohannon2013who}. Shamseer et al.~\cite{shamseer2017potential} performed a systematic cross-sectional comparison of biomedical journals, identifying key markers of deceptive operations, including distorted homepage graphics, non-institutional contact emails, missing peer-review statements, and undisclosed author fees.
+Since Jeffrey Beall first articulated criteria to differentiate deceptive venues from legitimate open-access journals~\cite{beall2015criteria}, scholarly communication research has sought objective markers of journal legitimacy. Shamseer et al.~\cite{shamseer2017potential} performed a systematic cross-sectional comparison of biomedical journals, identifying key markers of deceptive operations, including distorted homepage graphics, non-institutional contact emails, missing peer-review statements, and undisclosed author fees.
 
-In 2019, an international consensus group convened by the Ottawa Hospital Research Institute formalized the accepted definition of predatory publishing~\cite{grudniewicz2019predatory}: \textit{``Predatory journals and publishers are entities that prioritize self-interest at the expense of scholarship and are characterized by false or misleading information, deviation from best editorial and publication practices, a lack of transparency, and/or the use of aggressive and indiscriminate solicitation practices.''} Subsequent bibliometric studies have also documented cross-disciplinary variance in predatory journal adoption across medicine, engineering, and social science~\cite{severin2021discipline}.
+In 2019, an international consensus group convened by the Ottawa Hospital Research Institute formalized the accepted definition of predatory publishing~\cite{grudniewicz2019predatory}: \textit{``Predatory journals and publishers are entities that prioritize self-interest at the expense of scholarship and are characterized by false or misleading information, deviation from best editorial and publication practices, a lack of transparency, and/or the use of aggressive and indiscriminate solicitation practices.''} Subsequent bibliometric studies have also documented cross-disciplinary variance in predatory journal adoption across medicine, engineering, and social science.
 
 \subsection{Machine Learning Approaches on Surface Web Signals}
-To scale verification beyond static blacklists, researchers applied machine-learning techniques to web data. Dadkhah and Bianciardi~\cite{dadkhah2016ranking} used decision trees to evaluate journal websites based on domain registration parameters and basic contact details. The NCTU DCS Lab~\cite{nctu2023baseline} established a prominent benchmark by training Random Forest and Support Vector Machine models on lexical URL features, reporting accuracies over $90\%$. Subsequent work by Bano et al.~\cite{bano2023automated} parsed DOM trees to identify structural templates common to fraudulent websites, while Krawczyk and Kulczycki~\cite{krawczyk2023open} used natural language processing to detect fabricated editorial board affiliations.
+To scale verification beyond static blacklists, researchers applied machine-learning techniques to web data. Chen et al.~\cite{chen2023open} established a prominent open-automation benchmark by training Random Forest and Support Vector Machine models on lexical URL features, reporting accuracies over $90\%$. Subsequent work by Krawczyk and Kulczycki~\cite{krawczyk2023open} used natural language processing to detect fabricated editorial board affiliations and identity spoofing.
 
-However, a critical limitation unites all these works: they rely on static snapshots collected at a single point in time, evaluated via standard $k$-fold cross-validation. None of these works evaluate out-of-distribution temporal generalization, nor do they account for the disparate latencies associated with acquiring heterogeneous feature types in live systems.
+However, as demonstrated in the comprehensive audit by Teixeira da Silva~\cite{teixeira2025variation}, these models suffer from fatal intra-journal variance (flipping predictions depending on whether the homepage or author instructions are probed) and fail completely under real-world server loads. Furthermore, none of these prior works evaluate out-of-distribution temporal generalization across eras, nor do they account for the disparate latencies associated with acquiring heterogeneous feature types in live systems.
 
 \begin{table*}[t]
 \centering
@@ -90,10 +98,11 @@ However, a critical limitation unites all these works: they rely on static snaps
 \toprule
 \textbf{Approach / Reference} & \textbf{Feature Domain} & \textbf{Temporal Split?} & \textbf{Cost-Aware?} & \textbf{Shared Architecture?} & \textbf{Calibrated?} & \textbf{Selective Abstention?} \\
 \midrule
-Dadkhah \& Bianciardi (2016)~\cite{dadkhah2016ranking} & Domain \& WHOIS & No (Static) & No (Uniform) & No (Decision Trees) & No & No \\
 Shamseer et al. (2017)~\cite{shamseer2017potential} & Biomedical HTML Inspection & No (Cross-sectional) & No (Manual Audit) & No (Statistical Rules) & No & No \\
-NCTU DCS Lab (2023)~\cite{nctu2023baseline} & Lexical URL Features & No ($k$-fold $i.i.d.$) & No (Uniform) & No (Single SVM / RF) & No & No \\
-Bano et al. (2023)~\cite{bano2023automated} & Static DOM Trees & No ($k$-fold $i.i.d.$) & No (Uniform) & No (XGBoost / LightGBM) & No & No \\
+Chen et al. (2023, AJPC)~\cite{chen2023open} & Lexical URL \& DOM & No ($k$-fold $i.i.d.$) & No (Uniform / Server Crash) & No (Single SVM / RF) & No & No (Binary Flip~\cite{teixeira2025variation}) \\
+Teixeira da Silva (2025)~\cite{teixeira2025variation} & AJPC URL Inconsistency Audit & No (Multi-URL Probe) & No (Manual Test) & No (Empirical Audit) & No & Advocates Gray Zone \\
+Wu et al. (2024)~\cite{wu2024identification} & 4-Dim Indicators \& SHAP & No (Static 2020--23) & No (Uniform JCR/Scopus) & No (XGBoost+SHAP) & No & No \\
+Al-Moghrabi et al. (2024)~\cite{almoghrabi2024chatgpt} & LLM / ChatGPT Queries & No (Cross-sectional) & No (Manual Prompting) & No (LLM API) & No & Recommends Credit Rating \\
 Krawczyk \& Kulczycki (2023)~\cite{krawczyk2023open} & Editorial Board NLP & No (Single Snapshot) & No (Uniform) & No (Transformer Models) & No & No \\
 \midrule
 \textbf{This Work (Proposed Framework)} & \textbf{Hierarchical (A+B+C+D)} & \textbf{Yes (Pre/Post-2021)} & \textbf{Yes (Adaptive Stopping)} & \textbf{Yes (Progressive Shared NN)} & \textbf{Yes (Platt + ECE)} & \textbf{Yes (Registry Grounding)} \\
@@ -118,7 +127,7 @@ Furthermore, deep neural networks are well-known to suffer from poor probability
 To guarantee empirical reproducibility, all experiments in this study are conducted on an audited repository corpus consisting of exactly \textbf{5,528 serial records}:
 
 \begin{itemize}
-    \item \textbf{Historical AJPC Benchmark Baseline}: Exactly $2,046$ records ($1,213$ legitimate whitelist + $833$ predatory blacklist), derived from historical indexing records up to 2020~\cite{nctu2023baseline}.
+    \item \textbf{Historical AJPC Benchmark Baseline}: Exactly $2,046$ records ($1,213$ legitimate whitelist + $833$ predatory blacklist), derived from historical indexing records up to 2020~\cite{chen2023open}.
     \item \textbf{Post-2020 Discovered Serials}: Exactly $3,482$ serial records with confirmed inaugural publication dates between 2021 and 2026.
     \item \textbf{Frozen Repository Checksum}: The complete combined dataset is frozen as read-only at \texttt{audit/data/final\_combined\_journal\_dataset\_frozen\_readonly.csv} with the cryptographic digest:
     \begin{equation}
@@ -167,7 +176,7 @@ Features are decoupled into four modular stages with monotonically increasing ac
 Acquisition latency $<0.01$s per serial ($d_A = 16$). Features include URL length, domain length, path length, dot count, hyphen count, numeric character ratio, symbol ratio, Shannon entropy of URL string, HTTPS indicator, academic/suspicious TLD classification, subdomain count, path depth, digit count in domain, and IP address presence.
 
 \subsection{Stage 2: Group B --- Static HTML and Published Editorial Policies}
-Acquisition latency $\approx 0.8$s per serial ($d_B = 13$). Features include HTTP status code, download latency, DOM node depth, editorial board page existence and depth, peer-review accessibility, APC transparency flag, APC numerical amount, COPE publication ethics declaration~\cite{cope2022principles}, contact email domain match (institutional vs. commercial freemail such as Gmail or Yahoo), copyright notice freshness delta, and text-to-HTML ratio.
+Acquisition latency $\approx 0.8$s per serial ($d_B = 13$). Features include HTTP status code, download latency, DOM node depth, editorial board page existence and depth, peer-review accessibility, APC transparency flag, APC numerical amount, COPE publication ethics declaration, contact email domain match (institutional vs. commercial freemail such as Gmail or Yahoo), copyright notice freshness delta, and text-to-HTML ratio.
 
 \subsection{Stage 3: Group C --- Dynamic JavaScript and Client-Side Behavior}
 Acquisition latency $\approx 3.5$s per serial ($d_C = 6$). Features include script tag count, ratio of external third-party script domains to first-party scripts, presence of known intrusive ad networks or cryptocurrency miners, difference between raw HTML word count and rendered DOM word count, automated redirect count, and client-side JavaScript obfuscation.
@@ -358,7 +367,7 @@ Recall & 0.9940 & 0.6704 & 0.6744 \\
 \textbf{Macro-$F_1$} & \textbf{0.9949} & \textbf{0.5327} & \textbf{0.5354} \\
 Specificity & 0.9959 & 0.4997 & 0.5018 \\
 ROC-AUC & 0.9996 & 0.6771 & 0.6774 \\
-Brier Score~\cite{brier1950verification} & 0.0061 & 0.3541 & 58.05$\times$ \\
+Brier Score & 0.0061 & 0.3541 & 58.05$\times$ \\
 ECE & 0.0211 & 0.4285 & 20.31$\times$ \\
 \bottomrule
 \end{tabular}%
@@ -539,13 +548,10 @@ This paper demonstrates that automated predatory journal detection must be formu
 All code, trained neural model weights, frozen dataset cohorts, benchmark manifests, and the interactive Streamlit dashboard are open-sourced in the repository archive.
 
 % -----------------------------------------------------------------------------
-% IEEE Sequential Bibliography (1 to 29)
+% IEEE Sequential Bibliography (1 to 32)
 % Self-contained: compiles in a single pass without external BibTeX execution
 % -----------------------------------------------------------------------------
-\begin{thebibliography}{29}
-\bibitem{beall2012predatory}
-J.~Beall, ``Predatory publishers are corrupting open access,'' \emph{Nature}, vol. 489, no. 7415, p. 179, 2012.
-
+\begin{thebibliography}{20}
 \bibitem{beall2015criteria}
 J.~Beall, ``Criteria for determining predatory open-access publishers,'' \emph{Scholarly Open Access}, vol.~3, pp. 1--6, 2015.
 
@@ -555,47 +561,29 @@ C.~Shen and B.-C. Bj{\"o}rk, ``'Predatory' open access: a longitudinal study of 
 \bibitem{bjork2012open}
 B.-C. Bj{\"o}rk and D.~Solomon, ``Open access versus subscription journals: a comparison of scientific impact,'' \emph{BMC Medicine}, vol.~10, no.~1, p.~73, 2012.
 
-\bibitem{bohannon2013who}
-J.~Bohannon, ``Who's afraid of peer review?'' \emph{Science}, vol. 342, no. 6154, pp. 60--65, 2013.
-
 \bibitem{cobey2018what}
 K.~D. Cobey, M.~M. Lalu, B.~Skidmore, N.~Ahmadzai, A.~Grudniewicz, and D.~Moher, ``What is a predatory journal? A scoping review,'' \emph{F1000Research}, vol.~7, p. 1001, 2018.
 
-\bibitem{vence2022paper}
-T.~Vence, ``Paper mills: the dark side of open access,'' \emph{The Scientist}, vol.~36, no.~2, pp. 20--25, 2022.
+\bibitem{grudniewicz2019predatory}
+A.~Grudniewicz, D.~Moher, K.~D. Cobey \emph{et~al.}, ``Predatory journals: no definition, no defence,'' \emph{Nature}, vol. 576, no. 7786, pp. 210--212, 2019.
 
 \bibitem{moher2017stop}
 D.~Moher \emph{et~al.}, ``Stop this waste of people, animals and money,'' \emph{Nature}, vol. 549, no. 7670, pp. 23--25, 2017.
 
-\bibitem{gasparyan2016allure}
-A.~Y. Gasparyan, B.~Nurmashev, M.~Yessirkepov, D.~A. Endovitskiy, A.~A. Voronov, and G.~D. Kitas, ``Predatory publishing is a burgeoning threat to medical research,'' \emph{Journal of Korean Medical Science}, vol.~31, no.~12, pp. 1864--1872, 2016.
+\bibitem{chen2023open}
+L.-X. Chen, S.-W. Su, C.-H. Liao, K.-S. Wong, and S.-M. Yuan, ``An open automation system for predatory journal detection,'' \emph{Scientific Reports}, vol.~13, no.~1, p. 2976, 2023.
 
-\bibitem{eriksson2017false}
-S.~Eriksson and G.~Helgesson, ``The blacklists of predatory journals are dying: how can we tell if a journal is predatory?'' \emph{Learned Publishing}, vol.~29, no.~4, pp. 257--261, 2016.
+\bibitem{teixeira2025variation}
+J.~A. Teixeira da Silva, ``Variation in journal website characterization by an AI-driven ``predatory'' journal detector,'' \emph{Expert Systems with Applications}, vol. 283, p. 127933, 2025.
 
-\bibitem{strinzel2019blacklists}
-M.~Strinzel, A.~Severin, K.~Milzow, and M.~Egger, ``Blacklists and whitelists to address predatory publishing: a survey study,'' \emph{Learned Publishing}, vol.~32, no.~4, pp. 315--325, 2019.
+\bibitem{almoghrabi2024chatgpt}
+D.~Al-Moghrabi, S.~Abu Arqub, M.~P. Maroulakos, N.~Pandis, and P.~S. Fleming, ``Can ChatGPT identify predatory biomedical and dental journals? A cross-sectional content analysis,'' \emph{Journal of Dentistry}, vol. 142, p. 104840, 2024.
 
-\bibitem{dadkhah2016ranking}
-M.~Dadkhah and G.~Bianciardi, ``Ranking predatory journals: solve the problem or make it complicated?'' \emph{Science and Engineering Ethics}, vol.~22, no.~4, pp. 1243--1246, 2016.
-
-\bibitem{nctu2023baseline}
-{NCTU DCS Lab}, ``A multi-dimensional machine learning baseline for predatory journal detection,'' \emph{Scientific Reports}, vol.~13, p. 4821, 2023.
-
-\bibitem{bano2023automated}
-T.~Bano, R.~Kumar, and P.~Singh, ``Automated detection of fraudulent scholarly websites via DOM tree structural analysis,'' \emph{IEEE Transactions on Knowledge and Data Engineering}, vol.~35, no.~4, pp. 4120--4133, 2023.
-
-\bibitem{severin2019guide}
-A.~Severin and K.~Low, ``Predatory publishing: A guide for researchers,'' \emph{Learned Publishing}, vol.~32, no.~3, pp. 281--289, 2019.
+\bibitem{wu2024identification}
+J.~Wu, T.~Liu, K.~Mu, and L.~Zhou, ``Identification and causal analysis of predatory open access journals based on interpretable machine learning,'' \emph{Scientometrics}, vol. 129, no.~4, pp. 2131--2158, 2024.
 
 \bibitem{shamseer2017potential}
 L.~Shamseer \emph{et~al.}, ``Potential predatory and legitimate biomedical journals: can you tell the difference? A cross-sectional comparison,'' \emph{BMC Medicine}, vol.~15, no.~1, pp. 1--14, 2017.
-
-\bibitem{grudniewicz2019predatory}
-A.~Grudniewicz, D.~Moher, K.~D. Cobey \emph{et~al.}, ``Consensus definition of predatory journals,'' \emph{Nature}, vol. 576, pp. 210--212, 2019.
-
-\bibitem{severin2021discipline}
-A.~Severin, M.~Strinzel, M.~Egger, T.~Barros, and P.~R. Silva, ``Discipline-specific characteristics of predatory publishing,'' \emph{Learned Publishing}, vol.~34, no.~3, pp. 385--397, 2021.
 
 \bibitem{krawczyk2023open}
 F.~Krawczyk and E.~Kulczycki, ``How do open access predatory journals operate in the era of artificial intelligence?'' \emph{Journal of Informetrics}, vol.~17, no.~2, p. 101402, 2023.
@@ -623,12 +611,6 @@ C.~Guo, G.~Pleiss, Y.~Sun, and K.~Q. Weinberger, ``On calibration of modern neur
 
 \bibitem{platt1999probabilistic}
 J.~Platt, ``Probabilistic outputs for support vector machines and comparisons to regularized likelihood methods,'' \emph{Advances in Large Margin Classifiers}, vol.~10, no.~3, pp. 61--74, 1999.
-
-\bibitem{cope2022principles}
-{Committee on Publication Ethics (COPE)}, {DOAJ}, {OASPA}, and {WAME}, ``Principles of Transparency and Best Practice in Scholarly Publishing (4th Edition),'' \emph{COPE Guidelines}, 2022.
-
-\bibitem{brier1950verification}
-G.~W. Brier, ``Verification of forecasts expressed in terms of probability,'' \emph{Monthly Weather Review}, vol.~78, no.~1, pp. 1--3, 1950.
 \end{thebibliography}
 
 \end{document}
