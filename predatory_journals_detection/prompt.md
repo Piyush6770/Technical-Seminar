@@ -189,7 +189,7 @@ If risk probability is between $0.40$ and $0.60$ or if evidence from registries 
 - **External Scholarly APIs**: Direct REST clients for `Crossref`, `OpenAlex`, `DOAJ`, and `ISSN Portal` with backoff retry handlers.
 - **Machine Learning & Calibration**: `scikit-learn`, `xgboost`, `torch` (for shared multi-head architecture).
 - **Explainability**: `shap` for feature attribution, paired with deterministic rule-based evidence extraction.
-- **Demonstration UI**: `streamlit` for interactive single-journal audit and batch assessment.
+- **Demonstration UI**: Modern `React 19` + `FastAPI` web application for interactive single-journal audit and benchmark analysis.
 - **Reproducibility**: Seed `42` pinned across all stochastic processes; strict isolation between training and temporal test splits.
 
 ---
@@ -199,4 +199,4 @@ If risk probability is between $0.40$ and $0.60$ or if evidence from registries 
 2. **Module 2: Model Training & Multi-Head Encoder** (`src/models/`): Train independent baselines and the progressive multi-head neural architecture on `HISTORICAL_TRAIN`.
 3. **Module 3: Calibration & Stopping Policy** (`src/models/stopping_controller.py`): Optimize confidence thresholds on `HISTORICAL_VAL`.
 4. **Module 4: Temporal Generalization Evaluation** (`src/evaluation/`): Run full evaluation on `TEMPORAL_TEST_UNTOUCHED` across E1–E6.
-5. **Module 5: Interactive Diagnostic Dashboard** (`src/ui/app.py`): Provide real-time URL inspection with cost breakdown, evidence trace, and calibrated risk score.
+5. **Module 5: Interactive Diagnostic Dashboard** (`frontend/` & `src/api_server.py`): Provide real-time URL inspection with cost breakdown, evidence trace, and calibrated risk score.

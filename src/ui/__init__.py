@@ -1,3 +1,0 @@
-"""
-Interactive UI Module
-"""

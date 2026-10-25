@@ -54,7 +54,7 @@ We explicitly categorize the contributions of this research into verified novelt
 ### 4.2 Engineering & System Integration Contributions
 - Decoupled, timeout-protected feature extractors with local SQLite caching.
 - Production-grade serialization decoupling PyTorch state dicts from scikit-learn standard scalers, ensuring safe deserialization (`weights_only=True`).
-- Interactive institutional Streamlit dashboard offering real-time single-journal verification, progressive audit traces, and high-throughput batch CSV screening.
+- Interactive institutional web application (React 19 + FastAPI) offering real-time single-journal verification, progressive audit traces, and comprehensive empirical benchmarks.
 
 ### 4.3 Experimentally Validated Results
 - **94.4% Latency Reduction**: Reducing mean inference latency from $9,310$ ms down to $519$ ms per journal.

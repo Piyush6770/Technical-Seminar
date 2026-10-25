@@ -1,5 +1,11 @@
 import os
+import sys
 import re
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 import pypdf
 from scripts.streamline_20_references import PAPERS_20
 

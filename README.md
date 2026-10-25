@@ -240,6 +240,9 @@ python scripts/verify_integrity.py
 
 ### 3. Run the Full-Stack Web Application
 
+> [!NOTE]
+> **Modern Full-Stack Architecture**: The user interface runs on a modern **React 19 + Vite** frontend with a high-throughput **FastAPI** REST backend. Legacy Streamlit prototypes are deprecated and no longer used.
+
 #### Option A: 1-Click Launcher (Windows)
 Double-click or run from command line:
 ```bat

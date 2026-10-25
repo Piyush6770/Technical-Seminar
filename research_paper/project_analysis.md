@@ -68,8 +68,8 @@ c:\Users\Pratik\Engineering\3rd Year\TS
 │   ├── explainability/
 │   │   ├── evidence_grounding.py             # Deterministic fact verification & contradiction engine
 │   │   └── diagnostic_report.py              # Section 6 structured JSON diagnostic emitter
-│   └── ui/
-│       └── app.py                            # Streamlit diagnostic web dashboard
+│   └── api_server.py                         # FastAPI REST backend server
+├── frontend/                                 # Interactive React 19 + Vite web application
 ├── tests/
 │   ├── test_features.py                      # Feature extraction unit tests
 │   ├── test_models.py                        # Model inference and calibration tests
@@ -145,7 +145,7 @@ the system abstains with `abstention_status: "REQUIRES_HUMAN_EXPERT_REVIEW"`.
 - Calibrated adaptive stopping controller with cost-error trade-off.
 - Six formal benchmarks (E1–E6) executed with full quantitative metrics logged to JSON.
 - Deterministic evidence grounding and selective abstention schema.
-- Interactive Streamlit application with minimal, institutional UI.
+- Interactive full-stack web application (React 19 + FastAPI) with clean institutional UI.
 - Comprehensive unit test suite (13 passing tests).
 
 ### Limitations & Scope Boundaries

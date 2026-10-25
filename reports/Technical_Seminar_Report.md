@@ -66,7 +66,7 @@ The commercialisation of Open Access publishing and author-facing Article Proces
 
 This Technical Seminar presents Cost-Aware Progressive Predatory Journal Detection, an end-to-end forensic framework that addresses these three weaknesses. Features are organised into four progressively acquired stages (URL geometry, static HTML policies, dynamic JavaScript behaviour and scholarly registry verification) totalling 42 features. A shared progressive multi-head neural network, implemented in PyTorch, accumulates representations across stages, while a calibrated adaptive stopping controller halts feature acquisition as soon as the posterior confidence exceeds a stage-specific threshold. Temperature and Platt scaling calibrate the posteriors, and a tri-state decision rule (Verified Legitimate, Selective Abstention, Predatory Warning) routes ambiguous cases to human experts. A deterministic evidence-grounding engine attaches registry-based evidence to each verdict.
 
-The system was evaluated on an audited corpus of 5,528 academic serials frozen with SHA-256 digests, using a strictly held-out temporal test set of 1,800 journals from 2021 to 2026. The proposed adaptive configuration reduces mean inference latency by 94.4% (519 ms versus 9,310 ms for full acquisition) while improving temporal Macro-F1 from 0.4560 to 0.5327. Tree-based baselines collapse under temporal drift (XGBoost Macro-F1 = 0.0904), and the measured Temporal Generalisation Ratio is 0.5354. Selective abstention lowers the false-positive rate from 29.9% to 13.8% while resolving 87.2% of serials autonomously. A Streamlit dashboard provides single-journal inspection, batch auditing and benchmark exploration.
+The system was evaluated on an audited corpus of 5,528 academic serials frozen with SHA-256 digests, using a strictly held-out temporal test set of 1,800 journals from 2021 to 2026. The proposed adaptive configuration reduces mean inference latency by 94.4% (519 ms versus 9,310 ms for full acquisition) while improving temporal Macro-F1 from 0.4560 to 0.5327. Tree-based baselines collapse under temporal drift (XGBoost Macro-F1 = 0.0904), and the measured Temporal Generalisation Ratio is 0.5354. Selective abstention lowers the false-positive rate from 29.9% to 13.8% while resolving 87.2% of serials autonomously. A full-stack web application (React 19 + FastAPI) provides single-journal inspection, progressive acquisition traces and benchmark exploration.
 
 Keywords: Predatory journals, temporal generalisation, progressive feature acquisition, early stopping, probability calibration, selective abstention, evidence grounding, PyTorch.
 
@@ -106,7 +106,7 @@ CHAPTER 1 INTRODUCTION
 
 Scholarly publishing is the backbone of scientific communication. Over the last two decades, the shift to Open Access models, in which authors or their institutions pay Article Processing Charges (APCs), has made publishing more accessible but has also created a financial incentive for fraudulent actors. Predatory journals imitate legitimate scholarly venues, promise peer review within days, collect author fees and publish unvetted work, including clinical and engineering studies that can mislead practitioners and pollute the scientific record. More than 10,000 deceptive serials are estimated to solicit manuscripts globally.
 
-This Technical Seminar studies the automated detection of such journals and presents a complete forensic framework named Cost-Aware Progressive Predatory Journal Detection. Rather than treating detection as a one-shot classification over a fixed feature vector, the framework couples four ideas: cost-aware progressive feature acquisition, out-of-distribution temporal evaluation, calibrated neural early stopping, and deterministic registry-based evidence grounding. The work is delivered as a reproducible codebase with audited datasets, neural checkpoints, a Streamlit diagnostic interface and an IEEE-format research paper.
+This Technical Seminar studies the automated detection of such journals and presents a complete forensic framework named Cost-Aware Progressive Predatory Journal Detection. Rather than treating detection as a one-shot classification over a fixed feature vector, the framework couples four ideas: cost-aware progressive feature acquisition, out-of-distribution temporal evaluation, calibrated neural early stopping, and deterministic registry-based evidence grounding. The work is delivered as a reproducible codebase with audited datasets, neural checkpoints, a modern full-stack web application (FastAPI backend + React 19 frontend) and an IEEE-format research paper.
 
 Motivation
 
@@ -138,7 +138,7 @@ To apply temperature and Platt scaling and a tri-state decision rule with select
 
 To evaluate the framework on an audited, SHA-256-frozen corpus with a strictly held-out temporal test set, and to compare it against monolithic, fixed-stage and tree-based baselines.
 
-To provide a Streamlit dashboard and an IEEE-format research paper that make the system and its results reproducible.
+To provide an interactive web application and an IEEE-format research paper that make the system and its results reproducible.
 
 Scope
 
@@ -162,7 +162,7 @@ The project followed an experimental research methodology with the following pha
 
 ### Evaluation: running six experiment families (E1 to E6) on the untouched temporal test cohort and on a web-noise pool for robustness.
 
-### Deployment and documentation: building the Streamlit interface, an automated test suite, publication figure scripts and the research paper.
+### Deployment and documentation: building the full-stack web application, an automated test suite, publication figure scripts and the research paper.
 
 # CHAPTER 2 LITERATURE SURVEY
 
@@ -334,7 +334,7 @@ The benchmark runner executes experiments E1 to E6 over all 5,528 serials and st
 
 ### User Interface Module
 
-src/ui/app.py implements a multi-tab Streamlit dashboard with a Single Journal Inspector, Batch CSV Auditing, an Audited Dataset Explorer and an Empirical Benchmark Matrix.
+The full-stack web application (`frontend/` and `src/api_server.py`) implements a modern, responsive interface built with React 19, Vite, and FastAPI. It provides three core tabs: Single Journal Audit, Empirical Benchmark Matrix, and Model Architecture.
 
 Tools and Technologies Used
 
@@ -356,7 +356,7 @@ The repository README documents the following reproducible workflow:
 
 ### Compile the paper: python scripts/strip_all_dollars_and_format_math.py.
 
-### Launch the dashboard: streamlit run src/ui/app.py and open http://localhost:8501.
+### Launch the web application: run start_app.bat or start the FastAPI backend (python -m uvicorn src.api_server:app --host 127.0.0.1 --port 8000) and open http://127.0.0.1:8000.
 
 # CHAPTER 6 RESULTS
 
@@ -392,19 +392,17 @@ Table 6.2: Key Quantitative Outcomes of the Proposed System
 
 The results show clearly that high in-distribution accuracy (0.9949) is not predictive of real-world performance, and that the temporal protocol is essential for honest evaluation. The absolute temporal Macro-F1 of 0.5327 is modest, which reflects the genuine difficulty of the task: the contemporary cohort is highly imbalanced (9.9% predatory) and predatory publishers actively mimic legitimate ones. The contribution of the proposed framework is therefore not an inflated headline accuracy but a more robust, cheaper and more accountable detector. The identical metrics of E2 and E4-2 to E4-4 indicate that, for the full-acquisition setting, later stages do not add discriminative signal beyond Stage 2 on this cohort, which further supports early stopping.
 
-Streamlit Diagnostic Dashboard
+Interactive Web Application
 
-The interactive dashboard (src/ui/app.py) exposes the system to non-technical users, such as librarians and research administrators, through four tabs:
+The modern web application (`frontend/` + `src/api_server.py`) exposes the system to non-technical users, such as librarians and research administrators, through three dedicated views:
 
-### Single Journal Inspector: enter a journal URL or ISSN to run real-time progressive auditing, with an evidence provenance log for the verdict.
+### Single Journal Audit: enter a journal URL, title, or ISSN to run real-time progressive auditing, featuring calibrated risk probability, stopping stage telemetry, and a verified evidence provenance drawer.
 
-### Batch CSV Auditing: upload a list of ISSNs or URLs for high-throughput automated classification.
+### Empirical Benchmark Results: explore latency frontiers, early-exit resolution distributions, and diagnostic metrics interactively.
 
-### Audited Dataset Explorer: browse records across the historical and contemporary cohorts.
+### Model Architecture Explorer: inspect the 4-stage feature hierarchy and shared neural network formulation.
 
-### Empirical Benchmark Matrix: explore latency frontiers and diagnostic metrics interactively.
-
-[Insert dashboard screenshots here: Figure 6.4 Single Journal Inspector, Figure 6.5 Batch CSV Auditing, Figure 6.6 Empirical Benchmark Matrix. Capture them by running streamlit run src/ui/app.py and use sharp, clear images with the figure number and title below each, as in the reference report.]
+[Insert web application screenshots here: Figure 6.4 Single Journal Audit, Figure 6.5 Benchmark Results, Figure 6.6 Model Architecture. Capture them from http://localhost:5173 or http://127.0.0.1:8000 and use sharp, clear images with the figure number and title below each, as in the reference report.]
 
 Conclusion
 
@@ -412,7 +410,7 @@ CHAPTER 7 CONCLUSIONS AND FUTURE SCOPE
 
 This Technical Seminar presented Cost-Aware Progressive Predatory Journal Detection, a reproducible framework that addresses three structural weaknesses of earlier detectors: static in-distribution evaluation, uniform feature cost and ungrounded black-box predictions. By organising 42 features into four progressively acquired stages, training a shared progressive neural network, calibrating its posteriors and stopping adaptively, the system reduces mean inference latency by 94.4% (519 ms versus 9,310 ms) and improves temporal Macro-F1 from 0.4560 to 0.5327 compared with full feature acquisition.
 
-The study also demonstrates that tree-based baselines collapse under temporal drift (XGBoost Macro-F1 = 0.0904) and quantifies drift with a Temporal Generalisation Ratio of 0.5354. Tri-state classification with selective abstention and deterministic evidence grounding makes the verdicts accountable: 87.2% of serials are resolved autonomously, the false-positive rate drops from 29.9% to 13.8%, and ambiguous journals are passed to human experts. The audited, hash-frozen dataset, scripted figures, test suite and Streamlit dashboard make the whole study reproducible.
+The study also demonstrates that tree-based baselines collapse under temporal drift (XGBoost Macro-F1 = 0.0904) and quantifies drift with a Temporal Generalisation Ratio of 0.5354. Tri-state classification with selective abstention and deterministic evidence grounding makes the verdicts accountable: 87.2% of serials are resolved autonomously, the false-positive rate drops from 29.9% to 13.8%, and ambiguous journals are passed to human experts. The audited, hash-frozen dataset, scripted figures, test suite and interactive web application make the whole study reproducible.
 
 As third-year Computer Engineering students, the work gave us practical experience in machine-learning research methodology, distribution-shift evaluation, calibration, web data acquisition, software engineering for reproducibility and scientific writing.
 
