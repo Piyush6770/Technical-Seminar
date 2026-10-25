@@ -294,27 +294,24 @@ def build_docx():
                     num_rows = len(rows_data)
                     num_cols = len(rows_data[0])
                     
-                    # Wide tables (>= 5 cols or hardware spec table) span 1 full-width column
-                    if num_cols >= 5 or num_cols == 3:
-                        switch_to_columns(1)
-                        total_tbl_w = 7.0
-                    else:
-                        total_tbl_w = 3.35
+                    # All tables fit within the 2-column width (3.35 inches)
+                    total_tbl_w = 3.35
 
                     t = doc.add_table(rows=num_rows, cols=num_cols)
                     t.alignment = WD_TABLE_ALIGNMENT.CENTER
+                    t.autofit = False
 
-                    # Compute clean column widths
+                    # Set custom column widths to fit 3.35 in
                     if num_cols == 6:
-                        widths = [Inches(1.4), Inches(1.0), Inches(1.1), Inches(1.1), Inches(1.1), Inches(1.3)]
+                        widths = [Inches(0.85), Inches(0.45), Inches(0.48), Inches(0.50), Inches(0.52), Inches(0.55)]
                     elif num_cols == 7:
-                        widths = [Inches(1.2), Inches(0.9), Inches(0.9), Inches(0.9), Inches(1.0), Inches(1.0), Inches(1.1)]
+                        widths = [Inches(0.60), Inches(0.42), Inches(0.38), Inches(0.45), Inches(0.45), Inches(0.65), Inches(0.40)]
                     elif num_cols == 10:
-                        widths = [Inches(0.5), Inches(1.4), Inches(0.6), Inches(0.6), Inches(0.6), Inches(0.6), Inches(0.6), Inches(0.6), Inches(0.7), Inches(0.8)]
+                        widths = [Inches(0.28), Inches(0.62), Inches(0.27), Inches(0.27), Inches(0.28), Inches(0.28), Inches(0.27), Inches(0.27), Inches(0.40), Inches(0.41)]
                     elif num_cols == 8:
-                        widths = [Inches(1.2), Inches(1.3), Inches(0.75), Inches(0.75), Inches(0.75), Inches(0.75), Inches(0.75), Inches(0.80)]
+                        widths = [Inches(0.50), Inches(0.55), Inches(0.38), Inches(0.38), Inches(0.38), Inches(0.38), Inches(0.38), Inches(0.40)]
                     elif num_cols == 3:
-                        widths = [Inches(2.2), Inches(1.8), Inches(3.0)]
+                        widths = [Inches(1.15), Inches(0.95), Inches(1.25)]
                     else:
                         w_per = total_tbl_w / num_cols
                         widths = [Inches(w_per)] * num_cols
@@ -328,8 +325,9 @@ def build_docx():
                                     cell.width = widths[c_idx]
                                 cell.vertical_alignment = WD_ALIGN_VERTICAL.TOP
                                 cp = cell.paragraphs[0]
-                                cp.paragraph_format.space_after = Pt(1)
-                                cp.paragraph_format.space_before = Pt(1)
+                                cp.paragraph_format.space_after = Pt(0.5)
+                                cp.paragraph_format.space_before = Pt(0.5)
+                                cp.paragraph_format.line_spacing = 1.0
                                 c_clean = clean_inline_markdown(val)
                                 
                                 # Pure uncolored cell
@@ -337,7 +335,7 @@ def build_docx():
                                     run = cp.add_run(c_clean)
                                     run.bold = True
                                     run.font.name = 'Times New Roman'
-                                    f_sz = 7.0 if num_cols >= 8 else 8.0
+                                    f_sz = 5.2 if num_cols >= 10 else (5.8 if num_cols >= 8 else (6.2 if num_cols >= 6 else 7.2))
                                     run.font.size = Pt(f_sz)
                                     run.font.color.rgb = RGBColor(15, 23, 42)
                                     # Top rule (1.0 pt) and header bottom rule (0.75 pt)
@@ -347,7 +345,7 @@ def build_docx():
                                                     left=dict(val='none', sz=0, color='auto'),
                                                     right=dict(val='none', sz=0, color='auto'))
                                 else:
-                                    f_sz = 6.8 if num_cols >= 8 else 7.8
+                                    f_sz = 5.0 if num_cols >= 10 else (5.6 if num_cols >= 8 else (6.0 if num_cols >= 6 else 6.8))
                                     add_formatted_text(cp, c_clean, base_font_size=f_sz)
                                     # Clean data row borders
                                     if r_idx == num_rows - 1:
@@ -364,10 +362,7 @@ def build_docx():
                                                         right=dict(val='none', sz=0, color='auto'))
 
                     sp = doc.add_paragraph()
-                    sp.paragraph_format.space_after = Pt(4)
-
-                    # Resume 2 columns
-                    switch_to_columns(2)
+                    sp.paragraph_format.space_after = Pt(2)
             table_lines = []
 
         if not line_s or line_s.startswith('# ') or line_s.startswith('---'):
@@ -415,12 +410,8 @@ def build_docx():
                 if not os.path.exists(img_path):
                     img_path = os.path.join(PROJECT_ROOT, 'paper', 'figures', img_name)
                 if os.path.exists(img_path):
-                    is_fig1 = "fig1" in img_name.lower()
-                    if is_fig1:
-                        switch_to_columns(1)
-                        img_width = Inches(6.8)
-                    else:
-                        img_width = Inches(3.35)
+                    # All figures fit inside column width (3.35 inches)
+                    img_width = Inches(3.35)
 
                     fig_p = doc.add_paragraph()
                     fig_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -439,9 +430,6 @@ def build_docx():
                         cap_run.font.name = 'Times New Roman'
                         cap_run.font.size = Pt(8.5)
                         cap_run.font.color.rgb = RGBColor(71, 85, 105)
-
-                    if is_fig1:
-                        switch_to_columns(2)
             continue
 
         # ---------------------------------------------------------------------

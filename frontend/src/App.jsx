@@ -23,7 +23,8 @@ import {
 const API_BASE = '/api';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('audit'); // audit | batch | benchmarks | cohorts | architecture
+  const queryParams = new URLSearchParams(window.location.search);
+  const [activeTab, setActiveTab] = useState(() => queryParams.get('tab') || 'audit'); // audit | batch | benchmarks | cohorts | architecture
   const [systemStatus, setSystemStatus] = useState(null);
   const [presets, setPresets] = useState([]);
 
@@ -66,6 +67,13 @@ export default function App() {
       .then(res => res.json())
       .then(data => setPresets(data))
       .catch(err => console.error('Presets error:', err));
+
+    if (queryParams.get('autoAudit') === 'true') {
+      handleRunAudit();
+    }
+    if (queryParams.get('autoBatch') === 'true') {
+      handleRunBatchSample();
+    }
   }, []);
 
   // Fetch benchmark data when needed

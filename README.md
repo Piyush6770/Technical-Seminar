@@ -164,10 +164,18 @@ All quantitative evaluations were executed on the untouched 1,800-record contemp
 │   ├── data/                              # Master frozen dataset CSV (SHA-256 verified)
 │   └── splits/                            # Historical train/val, temporal test, noise pool splits
 ├── artifacts/                             # Experimental outputs & generated reports
+│   ├── models/                            # Trained neural weights & calibration checkpoints
 │   └── reports/                           # benchmark_results.json & benchmark_report.md
-├── research_paper/                        # IEEE Research Paper Source & Compiled Deliverables
+├── reports/                               # College Technical Seminar Report & Documentation
+│   ├── Technical_Seminar_Report.docx      # 30-40 page PCCOE Technical Seminar Report
+│   ├── Literature_Survey.xlsx             # Complete 20-paper comparative survey spreadsheet
+│   └── figures/                           # Embedded report diagrams & PCCOE emblem
+├── research_paper/                        # IEEE Research Paper Source & Reference Library
+│   ├── research_paper.docx                # IEEE 2-column camera-ready paper (10pt, 7 pages)
 │   ├── research_paper.pdf                 # Final 7-page IEEE two-column publication PDF
 │   ├── research_paper.md                  # Canonical Markdown research manuscript
+│   ├── Literature_Survey.xlsx             # Comprehensive 20-paper literature survey
+│   ├── reference_papers/                  # Complete library of 20 authentic publisher PDFs
 │   └── figures/                           # 300 DPI publication PNGs & vector PDFs (Figs 1–7)
 ├── scripts/                               # Automation & compilation scripts
 │   ├── redesign_publication_diagrams.py   # Generates all 7 clean publication figures

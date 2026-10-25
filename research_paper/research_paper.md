@@ -1,8 +1,8 @@
 # Cost-Aware Progressive Predatory Journal Detection
 
-**Authors**: Dr. Swati Shinde, Suyog Jadhav, Pratik Jadhav, Piyush Patel, Parshwa Nikam  
-**Affiliation**: Department of Computer Engineering, Pimpri Chinchwad College of Engineering (PCCOE), Pune, India  
-**Correspondence Emails**: `swati.shinde@pccoepune.org`, `suyog.jadhav24@pccoepune.org`, `pratik.jadhav24@pccoepune.org`, `piyush.patel24@pccoepune.org`, `parshwa.nikam24@pccoepune.org`  
+**Dr. Swati Shinde, Suyog Jadhav, Pratik Jadhav, Piyush Patel, Parshwa Nikam**  
+*Department of Computer Engineering, Pimpri Chinchwad College of Engineering (PCCOE), Pune, India*  
+Emails: `{swati.shinde, suyog.jadhav24, pratik.jadhav24, piyush.patel24, parshwa.nikam24}@pccoepune.org`  
 **Target Publication Standard**: IEEE Transactions on Information Forensics and Security  
 **Artifact Archive Digest**: `SHA-256: d775c92cbda31fdc72c45b4f473e45de6bf0580f31d8ac61e960df8894c4f328`
 
@@ -192,18 +192,18 @@ Feature extraction pipelines were implemented in Python:
 ### A. Primary Benchmark Results
 We evaluate the proposed system across six controlled experimental configurations (E1 through E6), testing the impact of feature stages, adaptive stopping, architectural choices, and longitudinal temporal drift.
 
-| Exp ID | Evaluation Configuration | Precision | Recall | Macro-F1 | Predatory F1 | Specificity | ROC-AUC | Mean Latency | Stage Resolution |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **E1** | Group A Only (URL Geometry) | 0.1233 | 0.4078 | 0.4842 | 0.1894 | 0.6798 | 0.5721 | 10.0 ms | 100% at Stage 1 |
-| **E2** | Monolithic Full (A+B+C+D) | 0.1463 | 0.7542 | 0.4560 | 0.2450 | 0.5139 | 0.6326 | 9,310.0 ms | 100% at Stage 4 |
-| **E3** | **Adaptive Progressive (Proposed)** | **0.1724** | **0.5642** | **0.5327** | **0.2641** | **0.7008** | **0.6771** | **519.0 ms** | **36.3% S1, 63.7% S2** |
-| **E4-1** | Fixed Stage 1 (Group A) | 0.1233 | 0.4078 | 0.4842 | 0.1894 | 0.6798 | 0.5721 | 10.0 ms | 100% at Stage 1 |
-| **E4-2** | Fixed Stage 2 (Groups A+B) | 0.1463 | 0.7542 | 0.4560 | 0.2450 | 0.5139 | 0.6326 | 810.0 ms | 100% at Stage 2 |
-| **E4-3** | Fixed Stage 3 (Groups A+B+C) | 0.1463 | 0.7542 | 0.4560 | 0.2450 | 0.5139 | 0.6326 | 4,310.0 ms | 100% at Stage 3 |
-| **E4-4** | Fixed Stage 4 (Groups A+B+C+D) | 0.1463 | 0.7542 | 0.4560 | 0.2450 | 0.5139 | 0.6326 | 9,310.0 ms | 100% at Stage 4 |
-| **E5-X** | Stage 4 Independent XGBoost | 0.0994 | 1.0000 | 0.0904 | 0.1809 | 0.0000 | 0.5860 | 9,310.0 ms | 100% at Stage 4 |
-| **E5-R** | Stage 4 Independent Random Forest | 0.1038 | 1.0000 | 0.1388 | 0.1881 | 0.0469 | 0.5997 | 9,310.0 ms | 100% at Stage 4 |
-| **E6-H** | Historical In-Distribution Val | 1.0000 | 0.9880 | 0.9949 | 0.9940 | 1.0000 | 0.9951 | 426.0 ms | In-Distribution Base |
+| Exp | Configuration | Prec | Recall | Macro-F1 | ROC-AUC | Latency |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **E1** | Group A (URL Geometry) | 0.1233 | 0.4078 | 0.4842 | 0.5721 | 10.0 ms |
+| **E2** | Monolithic Full (A+B+C+D) | 0.1463 | 0.7542 | 0.4560 | 0.6326 | 9,310.0 ms |
+| **E3** | **Adaptive (Proposed)** | **0.1724** | **0.5642** | **0.5327** | **0.6771** | **519.0 ms** |
+| **E4-1** | Fixed Stage 1 (Group A) | 0.1233 | 0.4078 | 0.4842 | 0.5721 | 10.0 ms |
+| **E4-2** | Fixed Stage 2 (A+B) | 0.1463 | 0.7542 | 0.4560 | 0.6326 | 810.0 ms |
+| **E4-3** | Fixed Stage 3 (A+B+C) | 0.1463 | 0.7542 | 0.4560 | 0.6326 | 4,310.0 ms |
+| **E4-4** | Fixed Stage 4 (A+B+C+D) | 0.1463 | 0.7542 | 0.4560 | 0.6326 | 9,310.0 ms |
+| **E5-X** | Stage 4 Independent XGBoost | 0.0994 | 1.0000 | 0.0904 | 0.5860 | 9,310.0 ms |
+| **E5-R** | Stage 4 Independent Random Forest | 0.1038 | 1.0000 | 0.1388 | 0.5997 | 9,310.0 ms |
+| **E6-H** | Historical Val Baseline | 1.0000 | 0.9880 | 0.9949 | 0.9951 | 426.0 ms |
 
 ### B. Pareto Efficiency and Latency Reduction (E1, E2, E3)
 The core research objective of this work is demonstrating cost-accuracy Pareto efficiency. As shown in Table IV and Figure 2, monolithic full acquisition (E2) incurs an average latency of 9,310.0 ms per serial, as every journal must undergo headless browser rendering and scholarly registry queries. In contrast, our proposed adaptive progressive framework (E3) resolves candidates dynamically:
@@ -239,18 +239,18 @@ This 0.5354 ratio provides concrete, reproducible proof that static cross-valida
 ### D. Architectural Comparison: Representation Sharing vs. Tabular Collapse (E5)
 To understand why standard machine-learning pipelines fail under temporal drift, we benchmarked independent tabular baselines (XGBoost and Random Forest) against our shared multi-head network across all stages.
 
-| Stage Configuration | Model Architecture | Macro-F1 | Predatory F1 | Precision | Recall | Specificity | ECE |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Stage 1 (URL Only)** | XGBoost Baseline | 0.4837 | 0.0397 | 0.0685 | 0.0279 | 0.9445 | 0.0812 |
-| | Random Forest Baseline | 0.4880 | 0.0522 | 0.0787 | 0.0391 | 0.9328 | 0.1145 |
-| | **Shared Multi-Head (Ours)** | **0.4842** | **0.1894** | **0.1233** | **0.4078** | **0.6798** | **0.2610** |
-| **Stage 2 (+HTML)** | XGBoost Baseline | 0.4563 | 0.2452 | 0.1464 | 0.7542 | 0.5145 | 0.4612 |
-| | Random Forest Baseline | 0.4563 | 0.2452 | 0.1464 | 0.7542 | 0.5145 | 0.4612 |
-| | **Shared Multi-Head (Ours)** | **0.4560** | **0.2450** | **0.1463** | **0.7542** | **0.5139** | **0.4619** |
-| **Stage 4 (+Registries)** | XGBoost Baseline | 0.0904 | 0.1809 | 0.0994 | 1.0000 | 0.0000 | 0.8985 |
-| | Random Forest Baseline | 0.1388 | 0.1881 | 0.1038 | 1.0000 | 0.0469 | 0.6594 |
-| | **Shared Multi-Head (Ours)** | **0.4560** | **0.2450** | **0.1463** | **0.7542** | **0.5139** | **0.4619** |
-| **Adaptive Progressive** | **Proposed Controller (E3)** | **0.5327** | **0.2641** | **0.1724** | **0.5642** | **0.7008** | **0.3079** |
+| Stage | Architecture | Prec | Recall | Macro-F1 | ECE |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Stage 1 (URL)** | XGBoost Baseline | 0.0685 | 0.0279 | 0.4837 | 0.0812 |
+| | Random Forest Baseline | 0.0787 | 0.0391 | 0.4880 | 0.1145 |
+| | **Shared Multi-Head (Ours)** | **0.1233** | **0.4078** | **0.4842** | **0.2610** |
+| **Stage 2 (+HTML)** | XGBoost Baseline | 0.1464 | 0.7542 | 0.4563 | 0.4612 |
+| | Random Forest Baseline | 0.1464 | 0.7542 | 0.4563 | 0.4612 |
+| | **Shared Multi-Head (Ours)** | **0.1463** | **0.7542** | **0.4560** | **0.4619** |
+| **Stage 4 (+Reg)** | XGBoost Baseline | 0.0994 | 1.0000 | 0.0904 | 0.8985 |
+| | Random Forest Baseline | 0.1038 | 1.0000 | 0.1388 | 0.6594 |
+| | **Shared Multi-Head (Ours)** | **0.1463** | **0.7542** | **0.4560** | **0.4619** |
+| **Adaptive Policy** | **Proposed Controller (E3)** | **0.1724** | **0.5642** | **0.5327** | **0.3079** |
 
 As documented in Table V and illustrated in Figure 6, decoupled tree-based models suffer catastrophic collapse at Stage 4: XGBoost collapses to a Macro-F1 of **0.0904** (specificity = 0.0000, classifying every record as predatory), and Random Forest collapses to **0.1388** (specificity = 0.0469). This collapse occurs because tree models split on hard thresholds of external registry features (such as Crossref works count and DOAJ indexing flags). In contemporary cohorts, newly launched legitimate journals often lack instantaneous indexing, causing tree models to misclassify legitimate journals as predatory.
 
