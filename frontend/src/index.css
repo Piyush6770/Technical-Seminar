@@ -59,6 +59,17 @@
   padding: 0;
 }
 
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-page);
@@ -241,60 +252,78 @@ body {
 
 /* Presets Bar */
 .presets-container {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .presets-label {
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.74rem;
+  font-weight: 700;
   color: var(--text-dim);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
-.presets-list {
+.presets-list, .preset-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
 
-.preset-chip {
-  background: var(--bg-surface);
+.preset-chip, .preset-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  background: #ffffff;
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  padding: 0.95rem 1.15rem;
   cursor: pointer;
-  transition: all 120ms ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   text-align: left;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  position: relative;
+  box-sizing: border-box;
 }
 
-.preset-chip:hover {
-  border-color: var(--border-dark);
-  background: var(--bg-hover);
+.preset-chip:hover, .preset-btn:hover {
+  border-color: #3b82f6;
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.09);
 }
 
-.preset-chip.active {
-  border-color: var(--primary);
-  background: #f8fafc;
+.preset-chip.active, .preset-btn.active {
+  border-color: #2563eb;
+  background: #f0f7ff;
+  box-shadow: 0 0 0 1.5px #2563eb, 0 4px 12px rgba(37, 99, 235, 0.12);
 }
 
-.preset-chip-header {
+.preset-chip-header, .preset-btn-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
+  gap: 0.5rem;
 }
 
-.preset-chip-title {
-  font-size: 0.86rem;
+.preset-chip-title, .preset-btn-title {
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.preset-chip-desc {
-  font-size: 0.75rem;
-  color: var(--text-dim);
+.preset-chip-desc, .preset-btn-desc {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: 1.35;
 }
 
 /* Form Styles */
@@ -305,7 +334,7 @@ body {
   margin-bottom: 1rem;
 }
 
-.field {
+.field, .field-group {
   display: flex;
   flex-direction: column;
 }
@@ -326,6 +355,8 @@ body {
   color: var(--text-main);
   font-family: var(--font-sans);
   transition: border-color 120ms ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .field-input:focus, .field-select:focus {
@@ -344,25 +375,26 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  padding: 0.55rem 1.1rem;
+  padding: 0.6rem 1.15rem;
   border-radius: var(--radius-md);
-  font-size: 0.84rem;
+  font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 120ms ease;
   border: 1px solid transparent;
+  box-sizing: border-box;
 }
 
-.btn-dark {
+.btn-dark, .btn-primary {
   background: var(--primary);
   color: #ffffff;
 }
 
-.btn-dark:hover:not(:disabled) {
+.btn-dark:hover:not(:disabled), .btn-primary:hover:not(:disabled) {
   background: var(--primary-hover);
 }
 
-.btn-dark:disabled {
+.btn-dark:disabled, .btn-primary:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -384,10 +416,12 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.15rem 0.5rem;
+  padding: 0.18rem 0.55rem;
   border-radius: 999px;
   font-size: 0.72rem;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .pill-legit {
@@ -415,7 +449,7 @@ body {
 }
 
 /* Verdict Banner */
-.verdict-card {
+.verdict-card, .verdict-banner {
   padding: 1.25rem 1.5rem;
   border-radius: var(--radius-lg);
   border: 1px solid;
@@ -425,17 +459,17 @@ body {
   gap: 1rem;
 }
 
-.verdict-card.safe {
+.verdict-card.safe, .verdict-banner.banner-safe {
   background: var(--status-safe-bg);
   border-color: var(--status-safe-border);
 }
 
-.verdict-card.danger {
+.verdict-card.danger, .verdict-banner.banner-danger {
   background: var(--status-danger-bg);
   border-color: var(--status-danger-border);
 }
 
-.verdict-card.warning {
+.verdict-card.warning, .verdict-banner.banner-warning {
   background: var(--status-warn-bg);
   border-color: var(--status-warn-border);
 }
@@ -444,19 +478,41 @@ body {
   margin-top: 2px;
 }
 
-.safe .verdict-icon-wrap { color: var(--status-safe-text); }
-.danger .verdict-icon-wrap { color: var(--status-danger-text); }
-.warning .verdict-icon-wrap { color: var(--status-warn-text); }
+.safe .verdict-icon-wrap, .banner-safe { color: var(--status-safe-text); }
+.danger .verdict-icon-wrap, .banner-danger { color: var(--status-danger-text); }
+.warning .verdict-icon-wrap, .banner-warning { color: var(--status-warn-text); }
 
-.verdict-heading {
+.verdict-heading, .verdict-title {
   font-size: 1.05rem;
   font-weight: 600;
   margin-bottom: 0.35rem;
 }
 
-.safe .verdict-heading { color: var(--status-safe-text); }
-.danger .verdict-heading { color: var(--status-danger-text); }
-.warning .verdict-heading { color: var(--status-warn-text); }
+.safe .verdict-heading, .banner-safe .verdict-title { color: var(--status-safe-text); }
+.danger .verdict-heading, .banner-danger .verdict-title { color: var(--status-danger-text); }
+.warning .verdict-heading, .banner-warning .verdict-title { color: var(--status-warn-text); }
+
+.verdict-body, .verdict-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.verdict-footnote {
+  font-size: 0.76rem;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rotate-spin {
+  animation: spin 1s linear infinite;
+}
 
 .verdict-body {
   font-size: 0.85rem;

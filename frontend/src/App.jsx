@@ -148,12 +148,7 @@ export default function App() {
     }
   }, [activeTab]);
 
-  const applyPreset = (p) => {
-    setUrl(p.url);
-    setTitle(p.title);
-    setIssn(p.issn);
-    setPublisher(p.publisher);
-  };
+
 
   // Client-side heuristic simulation when backend is offline
   const simulateAudit = (targetUrl, targetTitle, targetIssn, targetPub) => {
@@ -163,24 +158,24 @@ export default function App() {
       return {
         verdict: "Legitimate",
         verdict_level: "safe",
-        verdict_title: "Verified: Legitimate Academic Publication Venue",
-        verdict_desc: "The serial demonstrates consistent structural traits, verified editorial presence, and genuine scholarly infrastructure. Calibrated predatory risk: 12.3%.",
+        verdict_title: "Verified Legitimate Journal",
+        verdict_desc: "Matches verified publisher records and indexing standards. Low predatory risk.",
         stopping_stage: 2,
         calibrated_risk: 0.123,
         total_latency_ms: 142.5,
         latency_saved_ms: 9167.5,
         adaptive_enabled: true,
-        halt_reason: "Decision resolved decisively at Stage 2 (87.7% confidence). Dynamic JS & registries deferred.",
+        halt_reason: "Resolved at Stage 2 with 87.7% confidence. Later stages skipped.",
         stages: [
-          { stage: 1, name: "Stage 1: URL Geometry", p: 0.18, conf: 0.82, entropy: 0.68, latency: 8.5, status: "Evaluated" },
-          { stage: 2, name: "Stage 2: HTML Policies", p: 0.123, conf: 0.877, entropy: 0.54, latency: 134.0, status: "Halted (Decision Met)" },
-          { stage: 3, name: "Stage 3: Dynamic JS", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" },
-          { stage: 4, name: "Stage 4: Scholarly Registries", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" }
+          { stage: 1, name: "Stage 1: URL Structure", p: 0.18, conf: 0.82, entropy: 0.68, latency: 8.5, status: "Evaluated" },
+          { stage: 2, name: "Stage 2: Web Policies", p: 0.123, conf: 0.877, entropy: 0.54, latency: 134.0, status: "Halted (Decision Met)" },
+          { stage: 3, name: "Stage 3: Page Scripts", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" },
+          { stage: 4, name: "Stage 4: Registry Check", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" }
         ],
         evidence_summary: {
           corroborated_facts: [
-            "Official BioMed Central / Springer Nature domain structure",
-            "Transparent peer-review and APC policies disclosed",
+            "Official BioMed Central / Springer Nature publisher domain",
+            "Clear peer review and APC policies with COPE compliance",
             "Active indexing verified in DOAJ, Scopus, and PubMed",
             "Official ISSN verified and matched to Crossref DOI prefix"
           ],
@@ -195,34 +190,34 @@ export default function App() {
           risk_score: 0.123,
           verdict: "LEGITIMATE_VERIFIED",
           early_exit_stage: 2,
-          latency_speedup: "98.5% over monolithic crawling"
+          latency_speedup: "98.5% faster vs full crawl"
         }
       };
     } else if (lower.includes('besra') || lower.includes('ijabs') || lower.includes('portal.xyz')) {
       return {
         verdict: "Predatory",
         verdict_level: "danger",
-        verdict_title: "Warning: High Predatory / Deceptive Risk Detected",
-        verdict_desc: "Multiple deceptive publishing heuristics identified, including anomalous domain characteristics, unverified editorial board declarations, or rapid review promises. Calibrated risk: 94.6%.",
+        verdict_title: "High Predatory Risk",
+        verdict_desc: "Displays strong deceptive publishing indicators, unverified editorial claims, or domain anomalies.",
         stopping_stage: 2,
         calibrated_risk: 0.946,
         total_latency_ms: 198.0,
         latency_saved_ms: 9112.0,
         adaptive_enabled: true,
-        halt_reason: "Decision resolved decisively at Stage 2 (94.6% confidence). Dynamic JS & registries deferred.",
+        halt_reason: "Resolved at Stage 2 with 94.6% confidence. Later stages skipped.",
         stages: [
-          { stage: 1, name: "Stage 1: URL Geometry", p: 0.76, conf: 0.76, entropy: 0.79, latency: 9.2, status: "Evaluated" },
-          { stage: 2, name: "Stage 2: HTML Policies", p: 0.946, conf: 0.946, entropy: 0.31, latency: 188.8, status: "Halted (Decision Met)" },
-          { stage: 3, name: "Stage 3: Dynamic JS", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" },
-          { stage: 4, name: "Stage 4: Scholarly Registries", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" }
+          { stage: 1, name: "Stage 1: URL Structure", p: 0.76, conf: 0.76, entropy: 0.79, latency: 9.2, status: "Evaluated" },
+          { stage: 2, name: "Stage 2: Web Policies", p: 0.946, conf: 0.946, entropy: 0.31, latency: 188.8, status: "Halted (Decision Met)" },
+          { stage: 3, name: "Stage 3: Page Scripts", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" },
+          { stage: 4, name: "Stage 4: Registry Check", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" }
         ],
         evidence_summary: {
           corroborated_facts: [],
           contradicted_claims: [
-            "Perfunctory peer review promise (<48 hours) detected on submission page",
-            "Public freemail contact address used for editorial communications",
-            "Absence of authentic Committee on Publication Ethics (COPE) affiliation",
-            "Missing active DOI deposit prefix in Crossref metadata"
+            "Offers rapid turnaround peer review (<48 hours) on submission page",
+            "Uses public freemail address for editorial correspondence",
+            "Unverified Committee on Publication Ethics (COPE) affiliation",
+            "No active Crossref DOI deposit prefix found"
           ]
         },
         diagnostic_report: {
@@ -234,15 +229,15 @@ export default function App() {
           risk_score: 0.946,
           verdict: "PREDATORY_WARNING",
           early_exit_stage: 2,
-          latency_speedup: "97.9% over monolithic crawling"
+          latency_speedup: "97.9% faster vs full crawl"
         }
       };
     } else if (lower.includes('geoproximites') || lower.includes('hindawi') || lower.includes('bmri')) {
       return {
         verdict: "Inconclusive",
         verdict_level: "warning",
-        verdict_title: "Selective Abstention: Human Expert Review Recommended",
-        verdict_desc: "The calibrated risk (48.5%) lies in the uncertain region (40%-60%), or conflicting provenance was detected between public claims and authoritative registries. Automated verdict abstained.",
+        verdict_title: "Manual Review Required",
+        verdict_desc: "Risk score is in the borderline zone (40–60%) or records are conflicting. Automated verdict withheld.",
         stopping_stage: 4,
         calibrated_risk: 0.485,
         total_latency_ms: 540.0,
@@ -250,10 +245,10 @@ export default function App() {
         adaptive_enabled: true,
         halt_reason: "Borderline confidence reached Stage 4. Routed to human expert triage queue.",
         stages: [
-          { stage: 1, name: "Stage 1: URL Geometry", p: 0.52, conf: 0.52, entropy: 0.99, latency: 8.0, status: "Evaluated" },
-          { stage: 2, name: "Stage 2: HTML Policies", p: 0.49, conf: 0.51, entropy: 0.99, latency: 142.0, status: "Evaluated" },
-          { stage: 3, name: "Stage 3: Dynamic JS", p: 0.47, conf: 0.53, entropy: 0.99, latency: 180.0, status: "Evaluated" },
-          { stage: 4, name: "Stage 4: Scholarly Registries", p: 0.485, conf: 0.515, entropy: 0.99, latency: 210.0, status: "Halted (Decision Met)" }
+          { stage: 1, name: "Stage 1: URL Structure", p: 0.52, conf: 0.52, entropy: 0.99, latency: 8.0, status: "Evaluated" },
+          { stage: 2, name: "Stage 2: Web Policies", p: 0.49, conf: 0.51, entropy: 0.99, latency: 142.0, status: "Evaluated" },
+          { stage: 3, name: "Stage 3: Page Scripts", p: 0.47, conf: 0.53, entropy: 0.99, latency: 180.0, status: "Evaluated" },
+          { stage: 4, name: "Stage 4: Registry Check", p: 0.485, conf: 0.515, entropy: 0.99, latency: 210.0, status: "Halted (Decision Met)" }
         ],
         evidence_summary: {
           corroborated_facts: [
@@ -261,7 +256,7 @@ export default function App() {
             "Valid registered ISSN in official international directory"
           ],
           contradicted_claims: [
-            "Emerging venue lacks mature indexing history in major commercial databases"
+            "Emerging venue lacks mature indexing history in major databases"
           ]
         },
         diagnostic_report: {
@@ -273,7 +268,7 @@ export default function App() {
           risk_score: 0.485,
           verdict: "SELECTIVE_ABSTENTION_HUMAN_TRIAGE",
           early_exit_stage: 4,
-          latency_speedup: "94.2% over monolithic crawling"
+          latency_speedup: "94.2% faster vs full crawl"
         }
       };
     } else {
@@ -283,23 +278,23 @@ export default function App() {
       return {
         verdict: isSuspiciousTLD ? "Predatory" : "Legitimate",
         verdict_level: isSuspiciousTLD ? "danger" : "safe",
-        verdict_title: isSuspiciousTLD ? "Warning: High Predatory / Deceptive Risk Detected" : "Verified: Legitimate Academic Publication Venue",
-        verdict_desc: `Progressive analysis completed. Calibrated risk: ${(risk * 100).toFixed(1)}%.`,
+        verdict_title: isSuspiciousTLD ? "High Predatory Risk" : "Verified Legitimate Journal",
+        verdict_desc: `Analysis completed. Calibrated risk: ${(risk * 100).toFixed(1)}%.`,
         stopping_stage: 1,
         calibrated_risk: risk,
         total_latency_ms: 12.0,
         latency_saved_ms: 9298.0,
         adaptive_enabled: true,
-        halt_reason: "Decision resolved decisively at Stage 1 (<10 ms). Remaining stages deferred.",
+        halt_reason: "Resolved at Stage 1 (<10 ms). Later stages skipped.",
         stages: [
-          { stage: 1, name: "Stage 1: URL Geometry", p: risk, conf: Math.max(risk, 1 - risk), entropy: 0.55, latency: 12.0, status: "Halted (Decision Met)" },
-          { stage: 2, name: "Stage 2: HTML Policies", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" },
-          { stage: 3, name: "Stage 3: Dynamic JS", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" },
-          { stage: 4, name: "Stage 4: Scholarly Registries", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" }
+          { stage: 1, name: "Stage 1: URL Structure", p: risk, conf: Math.max(risk, 1 - risk), entropy: 0.55, latency: 12.0, status: "Halted (Decision Met)" },
+          { stage: 2, name: "Stage 2: Web Policies", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" },
+          { stage: 3, name: "Stage 3: Page Scripts", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" },
+          { stage: 4, name: "Stage 4: Registry Check", p: null, conf: null, entropy: null, latency: 0.0, status: "Deferred (Early Exit)" }
         ],
         evidence_summary: {
-          corroborated_facts: isSuspiciousTLD ? [] : ["Domain geometry consistent with legitimate academic infrastructure"],
-          contradicted_claims: isSuspiciousTLD ? ["Anomalous domain TLD and entropy pattern detected"] : []
+          corroborated_facts: isSuspiciousTLD ? [] : ["Domain matches legitimate academic infrastructure"],
+          contradicted_claims: isSuspiciousTLD ? ["Suspicious top-level domain detected"] : []
         },
         diagnostic_report: {
           timestamp: new Date().toISOString(),
@@ -310,15 +305,15 @@ export default function App() {
           risk_score: risk,
           verdict: isSuspiciousTLD ? "PREDATORY_WARNING" : "LEGITIMATE_VERIFIED",
           early_exit_stage: 1,
-          latency_speedup: "99.8% over monolithic crawling"
+          latency_speedup: "99.8% faster vs full crawl"
         }
       };
     }
   };
 
-  const handleRunAudit = async (e) => {
-    if (e) e.preventDefault();
-    if (!url.trim()) return;
+  const executeAudit = async (targetUrl = url, targetTitle = title, targetIssn = issn, targetPub = publisher) => {
+    const qUrl = (targetUrl || '').trim();
+    if (!qUrl) return;
 
     setAuditLoading(true);
     setAuditError(null);
@@ -328,10 +323,10 @@ export default function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          url,
-          title,
-          issn,
-          publisher,
+          url: qUrl,
+          title: targetTitle || '',
+          issn: targetIssn || '',
+          publisher: targetPub || '',
           adaptive,
           live_network: liveNetwork
         })
@@ -340,15 +335,45 @@ export default function App() {
       if (!res.ok) {
         throw new Error('API Offline or Server Refused');
       }
-      const data = await res.json();
+      const raw = await res.json();
+      const latencyMs = Number(raw.total_latency_ms ?? ((raw.total_latency_sec ?? 0.05) * 1000));
+      const savedMs = Number(raw.latency_saved_ms ?? Math.max(0, 9300 - latencyMs));
+      const riskVal = Number(raw.calibrated_risk ?? raw.predatory_risk ?? 0.5);
+      const stopStage = Number(raw.stopping_stage ?? raw.stopped_stage ?? 4);
+
+      const data = {
+        ...raw,
+        stopping_stage: stopStage,
+        calibrated_risk: riskVal,
+        total_latency_ms: latencyMs,
+        latency_saved_ms: savedMs,
+        evidence_summary: raw.evidence_summary ?? {
+          corroborated_facts: raw.corroborated_facts ?? [],
+          contradicted_claims: raw.contradicted_claims ?? []
+        },
+        diagnostic_report: raw.diagnostic_report ?? raw
+      };
       setAuditResult(data);
     } catch {
-      // Gracefully fall back to client-side progressive audit simulation
-      const fallbackResult = simulateAudit(url, title, issn, publisher);
+      // Fall back to client-side progressive audit simulation
+      const fallbackResult = simulateAudit(qUrl, targetTitle, targetIssn, targetPub);
       setAuditResult(fallbackResult);
     } finally {
       setAuditLoading(false);
     }
+  };
+
+  const handleRunAudit = (e) => {
+    if (e) e.preventDefault();
+    executeAudit(url, title, issn, publisher);
+  };
+
+  const applyPreset = (p) => {
+    setUrl(p.url);
+    setTitle(p.title);
+    setIssn(p.issn);
+    setPublisher(p.publisher);
+    executeAudit(p.url, p.title, p.issn, p.publisher);
   };
 
   const copyReport = () => {
@@ -368,8 +393,8 @@ export default function App() {
               <BookOpen size={18} />
             </div>
             <div>
-              <div className="brand-text-title">Scholarly Integrity Audit System</div>
-              <div className="brand-text-meta">Predatory Journal Detection & Progressive Verification</div>
+              <div className="brand-text-title">Journal Screener</div>
+              <div className="brand-text-meta">Multi-stage predatory journal screening</div>
             </div>
           </div>
 
@@ -379,21 +404,21 @@ export default function App() {
               onClick={() => setActiveTab('audit')}
             >
               <Activity size={15} />
-              Journal Audit
+              Audit
             </button>
             <button 
               className={`nav-item-btn ${activeTab === 'benchmarks' ? 'active' : ''}`}
               onClick={() => setActiveTab('benchmarks')}
             >
               <Sliders size={15} />
-              Benchmarks (E1–E6)
+              Benchmarks
             </button>
             <button 
               className={`nav-item-btn ${activeTab === 'architecture' ? 'active' : ''}`}
               onClick={() => setActiveTab('architecture')}
             >
               <Cpu size={15} />
-              Model Architecture
+              Architecture
             </button>
           </nav>
 
@@ -403,7 +428,7 @@ export default function App() {
               style={{ background: systemStatus?.online ? '#10b981' : '#f59e0b' }}
             ></span>
             <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>
-              {systemStatus?.online ? 'Backend Connected (Port 8000)' : 'Standalone Ready'}
+              {systemStatus?.online ? 'Connected' : 'Offline Mode'}
             </span>
           </div>
         </div>
@@ -418,38 +443,10 @@ export default function App() {
           <div>
             <div className="page-lead">
               <div>
-                <h1 className="page-title">Progressive Journal Integrity Audit</h1>
+                <h1 className="page-title">Journal Audit</h1>
                 <p className="page-subtitle">
-                  Cost-aware sequential screening over lexical URL geometry, HTML policy disclosures, dynamic JS, and authoritative scholarly registries.
+                  Screen a journal website for predatory indicators, unverified claims, and indexing records.
                 </p>
-              </div>
-            </div>
-
-            {/* Presets Bar */}
-            <div style={{ marginBottom: '1.25rem' }}>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
-                Audited Benchmark Candidate Profiles
-              </div>
-              <div className="preset-grid">
-                {presets.map((p) => (
-                  <button
-                    key={p.id}
-                    className="preset-btn"
-                    onClick={() => applyPreset(p)}
-                    type="button"
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span className="preset-btn-title">{p.name}</span>
-                      <span className={`pill ${
-                        p.badge === 'Legitimate' ? 'pill-legit' :
-                        p.badge === 'Predatory' ? 'pill-pred' : 'pill-review'
-                      }`}>
-                        {p.badge}
-                      </span>
-                    </div>
-                    <div className="preset-btn-desc">{p.tag}</div>
-                  </button>
-                ))}
               </div>
             </div>
 
@@ -458,7 +455,7 @@ export default function App() {
               <form onSubmit={handleRunAudit}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
                   <div className="field-group">
-                    <label className="field-label">Target Journal Web URL</label>
+                    <label className="field-label">Journal URL</label>
                     <input 
                       type="url" 
                       className="field-input code-font"
@@ -469,11 +466,11 @@ export default function App() {
                     />
                   </div>
                   <div className="field-group">
-                    <label className="field-label">Canonical Publication Title</label>
+                    <label className="field-label">Journal Title (Optional)</label>
                     <input 
                       type="text" 
                       className="field-input"
-                      placeholder="Journal Name" 
+                      placeholder="e.g. BMC Anesthesiology" 
                       value={title}
                       onChange={e => setTitle(e.target.value)}
                     />
@@ -482,21 +479,21 @@ export default function App() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}>
                   <div className="field-group">
-                    <label className="field-label">ISSN (Print / Electronic / Linking)</label>
+                    <label className="field-label">ISSN (Optional)</label>
                     <input 
                       type="text" 
                       className="field-input code-font"
-                      placeholder="1234-5678" 
+                      placeholder="e.g. 1471-2253" 
                       value={issn}
                       onChange={e => setIssn(e.target.value)}
                     />
                   </div>
                   <div className="field-group">
-                    <label className="field-label">Claimed Academic Publisher</label>
+                    <label className="field-label">Publisher (Optional)</label>
                     <input 
                       type="text" 
                       className="field-input"
-                      placeholder="Publisher Name" 
+                      placeholder="e.g. BioMed Central" 
                       value={publisher}
                       onChange={e => setPublisher(e.target.value)}
                     />
@@ -512,7 +509,7 @@ export default function App() {
                         checked={adaptive} 
                         onChange={e => setAdaptive(e.target.checked)}
                       />
-                      <span>Adaptive Early Exit (94.4% Latency Reduction)</span>
+                      <span>Early exit (skip later stages if confidence is high)</span>
                     </label>
                   </div>
 
@@ -520,17 +517,17 @@ export default function App() {
                     type="submit" 
                     className="btn btn-primary"
                     disabled={auditLoading}
-                    style={{ minWidth: '180px' }}
+                    style={{ minWidth: '160px' }}
                   >
                     {auditLoading ? (
                       <>
                         <Clock size={15} className="rotate-spin" />
-                        Running Audit...
+                        Auditing...
                       </>
                     ) : (
                       <>
                         <Sparkles size={15} />
-                        Run Progressive Audit
+                        Audit Journal
                       </>
                     )}
                   </button>
@@ -563,10 +560,10 @@ export default function App() {
                           auditResult.verdict_level === 'safe' ? 'pill-legit' :
                           auditResult.verdict_level === 'danger' ? 'pill-pred' : 'pill-review'
                         }`}>
-                          {auditResult.verdict.toUpperCase()} VERDICT
+                          {auditResult.verdict}
                         </span>
                         <span className="code-font" style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>
-                          Halted at Stage {auditResult.stopping_stage} / 4
+                          Exit at Stage {auditResult.stopping_stage} of 4
                         </span>
                       </div>
                       <h2 className="verdict-title">{auditResult.verdict_title}</h2>
@@ -579,31 +576,31 @@ export default function App() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
                   <div className="panel" style={{ marginBottom: 0 }}>
                     <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontWeight: 600, textTransform: 'uppercase' }}>
-                      Calibrated Predatory Risk
+                      Predatory Risk
                     </div>
                     <div className="code-font" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.25rem 0' }}>
                       {(auditResult.calibrated_risk * 100).toFixed(1)}%
                     </div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                      Platt scaling fitted on historical validation set
+                      Calibrated probability score
                     </div>
                   </div>
 
                   <div className="panel" style={{ marginBottom: 0 }}>
                     <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontWeight: 600, textTransform: 'uppercase' }}>
-                      Wall-Clock Inference Latency
+                      Inference Time
                     </div>
                     <div className="code-font" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.25rem 0', color: 'var(--status-safe-text)' }}>
                       {auditResult.total_latency_ms.toFixed(1)} ms
                     </div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                      Saved ~{auditResult.latency_saved_ms.toFixed(0)} ms vs. full scrape
+                      ~{(auditResult.latency_saved_ms / 1000).toFixed(1)}s saved vs full crawl
                     </div>
                   </div>
 
                   <div className="panel" style={{ marginBottom: 0 }}>
                     <div style={{ fontSize: '0.72rem', color: 'var(--text-dim)', fontWeight: 600, textTransform: 'uppercase' }}>
-                      Halt Stage & Reason
+                      Stopping Stage
                     </div>
                     <div className="code-font" style={{ fontSize: '1.15rem', fontWeight: 700, margin: '0.25rem 0' }}>
                       Stage {auditResult.stopping_stage} Exit
@@ -618,8 +615,8 @@ export default function App() {
                 <div className="panel">
                   <div className="panel-header">
                     <div>
-                      <div className="panel-title">Progressive Acquisition Trace</div>
-                      <div className="panel-subtitle">Latency-bounded feature acquisition across stages</div>
+                      <div className="panel-title">Inspection Stages</div>
+                      <div className="panel-subtitle">Sequential feature evaluation across 4 stages</div>
                     </div>
                   </div>
 
@@ -639,19 +636,19 @@ export default function App() {
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
                             <span style={{ fontWeight: 700, fontSize: '0.82rem' }}>Stage {stg.stage}</span>
                             <span className={`pill ${isHalted ? 'pill-legit' : (isEvaluated ? 'pill-neutral' : '')}`}>
-                              {stg.status}
+                              {isHalted ? 'Exit' : (isEvaluated ? 'Done' : 'Skipped')}
                             </span>
                           </div>
                           <div style={{ fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.5rem' }}>{stg.name}</div>
                           {isEvaluated ? (
                             <div className="code-font" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                              <div>Risk p: {(stg.p * 100).toFixed(1)}%</div>
+                              <div>Risk: {(stg.p * 100).toFixed(1)}%</div>
                               <div>Confidence: {(stg.conf * 100).toFixed(1)}%</div>
-                              <div>Latency: {stg.latency.toFixed(1)} ms</div>
+                              <div>Time: {stg.latency.toFixed(1)} ms</div>
                             </div>
                           ) : (
-                            <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)', fontStyle: 'italic' }}>
-                              Deferred to eliminate redundant network load
+                            <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
+                              Skipped (confidence met)
                             </div>
                           )}
                         </div>
@@ -660,54 +657,68 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Evidence Grounding Drawer */}
+                {/* Evidence Grounding */}
                 <div className="panel">
                   <div className="panel-header">
                     <div>
-                      <div className="panel-title">Deterministic Evidence Grounding</div>
-                      <div className="panel-subtitle">Multi-source factual validation against external scholarly registries</div>
+                      <div className="panel-title">Evidence & Signals</div>
+                      <div className="panel-subtitle">Cross-referenced against Crossref, DOAJ, and ISSN records</div>
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
                     <div>
-                      <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--status-safe-text)', marginBottom: '0.5rem' }}>
-                        CORROBORATED FACTS ({auditResult.evidence_summary.corroborated_facts.length})
-                      </div>
-                      {auditResult.evidence_summary.corroborated_facts.length > 0 ? (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                          {auditResult.evidence_summary.corroborated_facts.map((fact, i) => (
-                            <div key={i} style={{ display: 'flex', gap: '0.5rem', fontSize: '0.82rem' }}>
-                              <CheckCircle2 size={16} color="var(--status-safe)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                              <span>{fact}</span>
+                      {(() => {
+                        const facts = auditResult.evidence_summary?.corroborated_facts || auditResult.corroborated_facts || [];
+                        return (
+                          <>
+                            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--status-safe-text)', marginBottom: '0.5rem' }}>
+                              VERIFIED SIGNALS ({facts.length})
                             </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontStyle: 'italic' }}>
-                          No verified positive claims logged.
-                        </div>
-                      )}
+                            {facts.length > 0 ? (
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                                {facts.map((fact, i) => (
+                                  <div key={i} style={{ display: 'flex', gap: '0.5rem', fontSize: '0.82rem' }}>
+                                    <CheckCircle2 size={16} color="var(--status-safe-text)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                                    <span>{fact}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
+                                No positive signals recorded.
+                              </div>
+                            )}
+                          </>
+                        );
+                      })()}
                     </div>
 
                     <div>
-                      <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--status-danger-text)', marginBottom: '0.5rem' }}>
-                        CONTRADICTED CLAIMS ({auditResult.evidence_summary.contradicted_claims.length})
-                      </div>
-                      {auditResult.evidence_summary.contradicted_claims.length > 0 ? (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                          {auditResult.evidence_summary.contradicted_claims.map((claim, i) => (
-                            <div key={i} style={{ display: 'flex', gap: '0.5rem', fontSize: '0.82rem' }}>
-                              <XCircle size={16} color="var(--status-danger)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                              <span>{claim}</span>
+                      {(() => {
+                        const claims = auditResult.evidence_summary?.contradicted_claims || auditResult.contradicted_claims || [];
+                        return (
+                          <>
+                            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--status-danger-text)', marginBottom: '0.5rem' }}>
+                              RISK SIGNALS ({claims.length})
                             </div>
-                          ))}
-                        </div>
-                      ) : (
-                        <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontStyle: 'italic' }}>
-                          No deceptive heuristics or registry contradictions detected.
-                        </div>
-                      )}
+                            {claims.length > 0 ? (
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                                {claims.map((claim, i) => (
+                                  <div key={i} style={{ display: 'flex', gap: '0.5rem', fontSize: '0.82rem' }}>
+                                    <XCircle size={16} color="var(--status-danger-text)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                                    <span>{claim}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)' }}>
+                                No warning signals detected.
+                              </div>
+                            )}
+                          </>
+                        );
+                      })()}
                     </div>
                   </div>
                 </div>
@@ -716,8 +727,8 @@ export default function App() {
                 <div className="panel">
                   <div className="panel-header">
                     <div>
-                      <div className="panel-title">Diagnostic Record Artifact</div>
-                      <div className="panel-subtitle">Audited JSON output conformant with research specification</div>
+                      <div className="panel-title">Audit Record (JSON)</div>
+                      <div className="panel-subtitle">Exportable audit payload</div>
                     </div>
                     <button className="btn btn-outline" onClick={copyReport} style={{ fontSize: '0.78rem' }}>
                       <Copy size={13} />
@@ -740,14 +751,14 @@ export default function App() {
           <div>
             <div className="page-lead">
               <div>
-                <h1 className="page-title">Empirical Benchmark Evaluations (Experiments E1–E6)</h1>
+                <h1 className="page-title">Benchmark Results</h1>
                 <p className="page-subtitle">
-                  Longitudinal evaluation on held-out temporal cohorts ($N=1,800$ academic serials established between 2021 and 2026).
+                  Evaluated on modern journals (N=1,800, established 2021–2026).
                 </p>
               </div>
             </div>
 
-            {benchLoading && <div style={{ padding: '1rem', color: 'var(--text-muted)' }}>Loading benchmark telemetry...</div>}
+            {benchLoading && <div style={{ padding: '1rem', color: 'var(--text-muted)' }}>Loading benchmarks...</div>}
 
             {benchmarkData && (
               <div>
@@ -755,8 +766,8 @@ export default function App() {
                 <div className="panel">
                   <div className="panel-header">
                     <div>
-                      <div className="panel-title">Cost-Accuracy Pareto Frontier (E1 vs. E2 vs. E3)</div>
-                      <div className="panel-subtitle">Trade-off between wall-clock acquisition latency and generalization accuracy</div>
+                      <div className="panel-title">Latency vs. Accuracy (E1–E3)</div>
+                      <div className="panel-subtitle">Single-stage vs full crawl vs adaptive early exit</div>
                     </div>
                   </div>
 
@@ -764,17 +775,17 @@ export default function App() {
                     <table className="data-table">
                       <thead>
                         <tr>
-                          <th>Experiment Configuration</th>
+                          <th>Configuration</th>
                           <th>Macro-F1</th>
                           <th>ROC-AUC</th>
-                          <th>Mean Latency</th>
-                          <th>Latency Reduction</th>
-                          <th>Stages Acquired</th>
+                          <th>Latency</th>
+                          <th>Speedup</th>
+                          <th>Avg Stages</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={{ fontWeight: 600 }}>E1: Group A Only (URL Lexical Geometry)</td>
+                          <td style={{ fontWeight: 600 }}>E1: Stage 1 Only (URL Structure)</td>
                           <td className="code-font">0.4842</td>
                           <td className="code-font">0.5721</td>
                           <td className="code-font">10.0 ms</td>
@@ -782,16 +793,16 @@ export default function App() {
                           <td className="code-font">1.00 of 4</td>
                         </tr>
                         <tr>
-                          <td style={{ fontWeight: 600 }}>E2: Full Acquisition (A + B + C + D Exhaustive)</td>
+                          <td style={{ fontWeight: 600 }}>E2: Full Crawl (All 4 Stages)</td>
                           <td className="code-font">0.4560</td>
                           <td className="code-font">0.6326</td>
                           <td className="code-font">9,310.0 ms</td>
-                          <td style={{ color: 'var(--status-danger-text)' }}>0.0% (Worst Latency)</td>
+                          <td style={{ color: 'var(--status-danger-text)' }}>0%</td>
                           <td className="code-font">4.00 of 4</td>
                         </tr>
                         <tr style={{ background: '#f8fafc' }}>
                           <td style={{ fontWeight: 700, color: 'var(--primary)' }}>
-                            E3: Adaptive Progressive Stopping (Proposed)
+                            E3: Adaptive Early Exit (Proposed)
                           </td>
                           <td className="code-font" style={{ fontWeight: 700, color: 'var(--status-safe-text)' }}>0.5327</td>
                           <td className="code-font" style={{ fontWeight: 700, color: 'var(--status-safe-text)' }}>0.6771</td>
@@ -808,8 +819,8 @@ export default function App() {
                 <div className="panel">
                   <div className="panel-header">
                     <div>
-                      <div className="panel-title">Model Comparison: Shared Multi-Head vs Independent Baselines (E5)</div>
-                      <div className="panel-subtitle">Demonstrates why Deep Learning representations prevent single-class collapse under temporal shift</div>
+                      <div className="panel-title">Model Comparison (E5)</div>
+                      <div className="panel-subtitle">Shared multi-head neural network vs standard ML models under temporal shift</div>
                     </div>
                   </div>
 
@@ -817,21 +828,21 @@ export default function App() {
                     <table className="data-table">
                       <thead>
                         <tr>
-                          <th>Architecture Type</th>
+                          <th>Model</th>
                           <th>Macro-F1 (Stage 4)</th>
                           <th>ROC-AUC</th>
-                          <th>Expected Calibration Error (ECE)</th>
-                          <th>Status Under Temporal Shift</th>
+                          <th>Calibration Error (ECE)</th>
+                          <th>Temporal Shift Result</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr style={{ background: '#f8fafc' }}>
-                          <td style={{ fontWeight: 700 }}>Progressive Shared Multi-Head Neural Net (Proposed)</td>
+                          <td style={{ fontWeight: 700 }}>Shared Multi-Head Neural Net (Proposed)</td>
                           <td className="code-font" style={{ fontWeight: 700, color: 'var(--status-safe-text)' }}>0.4560</td>
                           <td className="code-font">0.6326</td>
                           <td className="code-font">0.4619</td>
                           <td>
-                            <span className="pill pill-legit">Balanced Predictions</span>
+                            <span className="pill pill-legit">Stable</span>
                           </td>
                         </tr>
                         <tr>
@@ -840,7 +851,7 @@ export default function App() {
                           <td className="code-font">0.5860</td>
                           <td className="code-font">0.8985</td>
                           <td>
-                            <span className="pill pill-pred">Catastrophic Collapse (Spec = 0.0)</span>
+                            <span className="pill pill-pred">Collapsed (Spec = 0.0)</span>
                           </td>
                         </tr>
                         <tr>
@@ -849,7 +860,7 @@ export default function App() {
                           <td className="code-font">0.5997</td>
                           <td className="code-font">0.6594</td>
                           <td>
-                            <span className="pill pill-pred">Severe Degradation</span>
+                            <span className="pill pill-pred">Degraded</span>
                           </td>
                         </tr>
                       </tbody>
@@ -861,33 +872,33 @@ export default function App() {
                 <div className="panel">
                   <div className="panel-header">
                     <div>
-                      <div className="panel-title">Longitudinal Temporal Degradation (E6)</div>
-                      <div className="panel-subtitle">In-distribution historical baseline vs. contemporary temporal test evaluation</div>
+                      <div className="panel-title">Temporal Generalization (E6)</div>
+                      <div className="panel-subtitle">Comparing performance on historical vs modern journals</div>
                     </div>
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
                     <div style={{ border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)', padding: '1.25rem' }}>
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600 }}>HISTORICAL IN-DISTRIBUTION VALIDATION</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600 }}>HISTORICAL DATA (PRE-2021)</div>
                       <div className="code-font" style={{ fontSize: '2rem', fontWeight: 800, margin: '0.5rem 0', color: 'var(--status-safe-text)' }}>0.9949</div>
                       <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                        Near-perfect performance reported in static benchmark literature
+                        Macro-F1 on static historical benchmark
                       </div>
                     </div>
 
                     <div style={{ border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)', padding: '1.25rem' }}>
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600 }}>OUT-OF-DISTRIBUTION TEMPORAL COHORT (2021–2026)</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600 }}>CONTEMPORARY COHORT (2021–2026)</div>
                       <div className="code-font" style={{ fontSize: '2rem', fontWeight: 800, margin: '0.5rem 0', color: 'var(--status-warn-text)' }}>0.5327</div>
                       <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                        Real-world generalization on modern publishing operations
+                        Macro-F1 on modern held-out journals
                       </div>
                     </div>
 
                     <div style={{ border: '1px solid var(--border-light)', borderRadius: 'var(--radius-md)', padding: '1.25rem' }}>
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600 }}>TEMPORAL GENERALIZATION RATIO (TGR)</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600 }}>GENERALIZATION RATIO (TGR)</div>
                       <div className="code-font" style={{ fontSize: '2rem', fontWeight: 800, margin: '0.5rem 0', color: 'var(--primary)' }}>0.5354</div>
                       <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                        Empirical ratio quantifying performance collapse across eras
+                        Ratio of modern vs historical performance
                       </div>
                     </div>
                   </div>
@@ -897,28 +908,28 @@ export default function App() {
                 <div className="panel">
                   <div className="panel-header">
                     <div>
-                      <div className="panel-title">Adaptive Exit Resolution Distribution</div>
-                      <div className="panel-subtitle">Percentage of candidates resolved dynamically at each stage</div>
+                      <div className="panel-title">Early Exit Distribution</div>
+                      <div className="panel-subtitle">Where journals exit across the 4 stages</div>
                     </div>
                   </div>
 
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     <div style={{ background: 'var(--bg-subtle)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
-                      <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-dim)' }}>STAGE 1 (URL GEOMETRY)</div>
+                      <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-dim)' }}>STAGE 1 (URL STRUCTURE)</div>
                       <div className="code-font" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.2rem 0' }}>36.3%</div>
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>653 serials resolved in &lt;10 ms</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>653 journals resolved in &lt;10 ms</div>
                     </div>
 
                     <div style={{ background: 'var(--bg-subtle)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
-                      <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-dim)' }}>STAGE 2 (HTML POLICIES)</div>
+                      <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-dim)' }}>STAGE 2 (WEB POLICIES)</div>
                       <div className="code-font" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.2rem 0' }}>63.7%</div>
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>1,147 serials resolved in ~810 ms</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>1,147 journals resolved in ~810 ms</div>
                     </div>
 
                     <div style={{ background: 'var(--bg-subtle)', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
                       <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-dim)' }}>STAGE 3 & 4 (ESCALATION)</div>
                       <div className="code-font" style={{ fontSize: '1.75rem', fontWeight: 800, margin: '0.2rem 0', color: 'var(--status-safe-text)' }}>0.0%</div>
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Zero redundant network calls on clear cases</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Escalation only for ambiguous cases</div>
                     </div>
                   </div>
                 </div>
@@ -934,9 +945,9 @@ export default function App() {
           <div>
             <div className="page-lead">
               <div>
-                <h1 className="page-title">Progressive Architecture & Formulation</h1>
+                <h1 className="page-title">System Architecture</h1>
                 <p className="page-subtitle">
-                  Mathematical framework of shared sequential representations and entropy-bounded adaptive stopping.
+                  Multi-stage neural pipeline with cost-sensitive early stopping.
                 </p>
               </div>
             </div>
@@ -945,45 +956,45 @@ export default function App() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
               <div className="panel" style={{ marginBottom: 0 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <strong style={{ fontSize: '0.9rem' }}>Stage 1: URL Geometry</strong>
+                  <strong style={{ fontSize: '0.9rem' }}>Stage 1: URL Structure</strong>
                   <span className="pill pill-neutral code-font">&lt;10 ms</span>
                 </div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginBottom: '0.65rem' }}>Group A (16 features)</div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                  Shannon entropy, TLD risk classification, symbol and numeric character densities, path depths, IPv4 pattern matching.
+                  Domain entropy, suspicious TLDs, IP patterns, character ratios, and path depth.
                 </div>
               </div>
 
               <div className="panel" style={{ marginBottom: 0 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <strong style={{ fontSize: '0.9rem' }}>Stage 2: HTML Policies</strong>
+                  <strong style={{ fontSize: '0.9rem' }}>Stage 2: Web Policies</strong>
                   <span className="pill pill-neutral code-font">~0.80 s</span>
                 </div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginBottom: '0.65rem' }}>Group B (13 features)</div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                  APC cost disclosure, editorial board link depth, peer-review accessibility statements, COPE declarations, institutional email validation.
+                  APC fees, review policies, editorial boards, COPE claims, and contact emails.
                 </div>
               </div>
 
               <div className="panel" style={{ marginBottom: 0 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <strong style={{ fontSize: '0.9rem' }}>Stage 3: Dynamic JS</strong>
+                  <strong style={{ fontSize: '0.9rem' }}>Stage 3: Page Scripts</strong>
                   <span className="pill pill-neutral code-font">~3.50 s</span>
                 </div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginBottom: '0.65rem' }}>Group C (6 features)</div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                  Headless DOM render delta, external third-party script ratios, ad networks, cryptocurrency miners, cloaked redirects.
+                  DOM render delta, external scripts, ad networks, redirect cloaking, and hidden trackers.
                 </div>
               </div>
 
               <div className="panel" style={{ marginBottom: 0 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <strong style={{ fontSize: '0.9rem' }}>Stage 4: Registries</strong>
+                  <strong style={{ fontSize: '0.9rem' }}>Stage 4: Registry Check</strong>
                   <span className="pill pill-neutral code-font">~5.00 s</span>
                 </div>
                 <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', marginBottom: '0.65rem' }}>Group D (7 features)</div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-                  Official ISSN Portal verification, Crossref DOI deposit active status, DOAJ indexing, Scopus/WoS claims corroboration.
+                  Crossref active DOI status, DOAJ indexing, ISSN Portal records, and Scopus/WoS claims.
                 </div>
               </div>
             </div>
@@ -992,14 +1003,14 @@ export default function App() {
             <div className="panel">
               <div className="panel-header">
                 <div>
-                  <div className="panel-title">Progressive Latent State Formulation</div>
-                  <div className="panel-subtitle">Sequential recurrence sharing across intermediate heads</div>
+                  <div className="panel-title">Pipeline Math</div>
+                  <div className="panel-subtitle">Recurrent latent state updates and stopping controller</div>
                 </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                 <div>
-                  <strong style={{ fontSize: '0.84rem', display: 'block', marginBottom: '0.4rem' }}>Latent Accumulation</strong>
+                  <strong style={{ fontSize: '0.84rem', display: 'block', marginBottom: '0.4rem' }}>Latent Representation</strong>
                   <pre className="json-box code-font" style={{ background: '#ffffff', color: '#0f172a' }}>
 {`h_1 = GELU(LN(W_1 * x_A + b_1))
 h_2 = GELU(LN(W_2 * [h_1; x_B] + b_2))
@@ -1007,7 +1018,7 @@ h_3 = GELU(LN(W_3 * [h_2; x_C] + b_3))
 h_4 = GELU(LN(W_4 * [h_3; x_D] + b_4))`}
                   </pre>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.5rem', lineHeight: 1.5 }}>
-                    Each representation h_k accumulates preceding evidence without discarding prior domain geometry.
+                    Each stage updates the latent vector with newly acquired features while preserving previous stage representations.
                   </p>
                 </div>
 
@@ -1021,7 +1032,7 @@ Halt if:
   Delta_cost(k -> k+1) > lambda * (1 - c_k)`}
                   </pre>
                   <p style={{ fontSize: '0.8rem', color: 'var(--text-dim)', marginTop: '0.5rem', lineHeight: 1.5 }}>
-                    Dynamically determines whether marginal gains in decision certainty justify the wall-clock latency of downstream network calls.
+                    Halts acquisition when prediction confidence exceeds the cost of running subsequent stages.
                   </p>
                 </div>
               </div>

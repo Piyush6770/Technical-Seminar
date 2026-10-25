@@ -191,7 +191,7 @@ All quantitative evaluations were executed on the untouched 1,800-record contemp
 │   ├── references.bib                     # 20 strictly sequential IEEE citations
 │   └── figures/                           # Vector PDFs & PNG diagrams (Figs 1–7)
 ├── frontend/                              # Interactive React 19 + Vite Web Application
-│   ├── src/App.jsx                        # 5-tab UI (Single Audit, Batch, Benchmarks, Cohorts, Architecture)
+│   ├── src/App.jsx                        # 3-tab UI (Journal Audit, Benchmarks, Architecture)
 │   ├── package.json                       # React 19 dependencies & scripts
 │   └── dist/                              # Pre-built production bundle served by FastAPI
 ├── src/                                   # Production Python source code
@@ -239,16 +239,23 @@ python scripts/verify_integrity.py
 ```
 
 ### 3. Run the Full-Stack Web Application
-Start the FastAPI backend server (which automatically serves the built React frontend):
+
+#### Option A: 1-Click Launcher (Windows)
+Double-click or run from command line:
+```bat
+start_app.bat
+```
+This automatically starts the FastAPI backend server and launches the frontend.
+
+#### Option B: Manual Launch
+Start the FastAPI backend server (which automatically serves the built React frontend at `http://127.0.0.1:8000`):
 ```bash
 python -m uvicorn src.api_server:app --host 127.0.0.1 --port 8000
 ```
 Open your browser at `http://127.0.0.1:8000` to access:
-- **Single Journal Audit**: Real-time progressive audit with risk score gauge, confidence bounds, early-exit stage indicator, and factual evidence logs.
-- **Batch Screening**: Bulk auditing across CSV files with confusion matrices and exportable results.
-- **Benchmark Dashboard**: Live visualization of Pareto latency frontiers, stage resolution distributions, and calibration reliability diagrams.
-- **Dataset Cohorts Explorer**: Browse frozen historical and temporal cohorts with cryptographic SHA-256 digests.
-- **Architecture Explorer**: Interactive diagram of the 4-stage feature hierarchy and shared neural network.
+- **Journal Audit**: Real-time progressive journal screening with calibrated predatory risk, confidence bounds, early-exit stage indicator, verified/risk signals, and exportable JSON audit records.
+- **Benchmark Results**: Empirical performance tables across experiments E1–E6 ($N=1,800$, 2021–2026), Pareto latency frontiers, model comparisons, temporal degradation ($TGR = 0.5354$), and early exit distributions.
+- **System Architecture**: Multi-stage feature hierarchy (Groups A–D), latency bounds, latent state update equations, and stopping controller decision policies.
 
 Alternatively, to run the frontend in Vite development mode:
 ```bash
