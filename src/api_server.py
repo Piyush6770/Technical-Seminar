@@ -387,9 +387,12 @@ def audit_journal(req: AuditRequest):
 def batch_screen(req: BatchRequest):
     t0 = time.perf_counter()
     if req.use_sample:
-        df_temp = pd.read_csv(TEMPORAL_TEST_PATH)
-        sample_n = min(req.sample_size, len(df_temp))
-        df_batch = df_temp.sample(sample_n, random_state=42)[["journal_name", "url", "open_access", "apc_amount"]].copy()
+        cols = [c for c in ["journal_name", "url", "publisher", "label"] if c in df_temp.columns]
+        df_batch = df_temp.sample(sample_n, random_state=42)[cols].copy()
+        if "journal_name" not in df_batch.columns and "canonical_title" in df_temp.columns:
+            df_batch["journal_name"] = df_temp["canonical_title"]
+        if "url" not in df_batch.columns and "canonical_url" in df_temp.columns:
+            df_batch["url"] = df_temp["canonical_url"]
     else:
         if not req.items or len(req.items) == 0:
             raise HTTPException(status_code=400, detail="No items provided for batch screening.")
