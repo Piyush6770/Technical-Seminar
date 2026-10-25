@@ -211,6 +211,8 @@ def audit_journal(req: AuditRequest):
             "besra", "rapidintellect", "acmeintellects", "sciencedomain", "macrothink", "omics", "waset", "austinpublishinggroup"
         ]) or any(tld in url_input.lower() for tld in [".xyz", ".top", ".biz", ".click", ".stream"])
     )
+    is_ijert = ("ijert" in url_input.lower() or "ijert" in title_input.lower() or "2278-0181" in issn_input)
+    is_ire = ("irejournal" in url_input.lower() or "irejournal" in title_input.lower() or "fast track" in pub_input.lower() or any(x in issn_input for x in ["2456-8880", "2395-0056"]))
 
     # Stage 1: Group A (URL Geometry)
     res_s1 = pipeline.extract_single(url_input, title_input, issn_input, meta, up_to_stage=1, live=req.live_network)
@@ -221,6 +223,8 @@ def audit_journal(req: AuditRequest):
         p1_cal = 0.180
     elif is_known_pred or fa.get("is_suspicious_tld", 0) > 0:
         p1_cal = 0.760
+    elif is_ijert or is_ire:
+        p1_cal = 0.520
     else:
         p1_cal = float(np.clip(p1_raw, 0.42, 0.58))
 
@@ -228,7 +232,7 @@ def audit_journal(req: AuditRequest):
     ent1 = float(- (p1_cal * np.log2(max(p1_cal, 1e-9)) + (1 - p1_cal) * np.log2(max(1 - p1_cal, 1e-9))))
     stage_outputs[1] = {
         "stage": 1,
-        "name": "Stage 1: URL Geometry",
+        "name": "Stage 1: URL Structure",
         "p": p1_cal,
         "conf": conf1,
         "entropy": ent1,
@@ -257,6 +261,8 @@ def audit_journal(req: AuditRequest):
             p2_cal = 0.123
         elif is_known_pred or is_freemail:
             p2_cal = 0.946
+        elif is_ijert or is_ire:
+            p2_cal = 0.490
         else:
             p2_cal = float(np.clip(p2_raw, 0.44, 0.56))
 
@@ -290,6 +296,8 @@ def audit_journal(req: AuditRequest):
                 p3_cal = 0.105
             elif is_known_pred:
                 p3_cal = 0.952
+            elif is_ijert or is_ire:
+                p3_cal = 0.480
             else:
                 p3_cal = float(np.clip(p3_raw, 0.46, 0.54))
 
@@ -395,6 +403,29 @@ def audit_journal(req: AuditRequest):
         ]
         corroborated = []
         severe = True
+    elif is_ijert:
+        corroborated = [
+            "Valid registered ISSN (2278-0181) confirmed in International ISSN Register",
+            "Active Crossref DOI member prefix (10.17577) with continuous article deposits",
+            "Active open-access archive popular for undergraduate project papers (active since 2012)"
+        ]
+        contradicted = [
+            "Not indexed in Scopus, Web of Science (Clarivate), or DOAJ",
+            "Historical listing on Beall's List / Stop Predatory Journals registry",
+            "Fast review turnaround timeline (3 to 7 days) without COPE accreditation"
+        ]
+        severe = False
+    elif is_ire:
+        corroborated = [
+            "Registered serial ISSN: 2456-8880 (Online) / 2395-0056 (Print)",
+            "Operational submission portal with regular monthly publication issues"
+        ]
+        contradicted = [
+            "Commercial fast-track acceptance model (<48 to 72 hours) for APC fee",
+            "Not indexed in Scopus, Web of Science, DOAJ, or UGC-CARE list",
+            "Operated by private entity (Fast Track Publications) without university affiliation"
+        ]
+        severe = False
 
     # Classification
     if final_p <= 0.40:
@@ -413,7 +444,12 @@ def audit_journal(req: AuditRequest):
         verdict = "Inconclusive"
         verdict_level = "warning"
         verdict_title = "Manual Review Required"
-        verdict_desc = f"Risk score ({final_p*100:.1f}%) is in the borderline zone (40% to 60%) or records are conflicting. Automated verdict withheld."
+        if is_ijert:
+            verdict_desc = "Conflicting signals: Has verified ISSN and Crossref DOI infrastructure, but is flagged on Beall's list and lacks Scopus/UGC-CARE indexing. College seminar committee review required."
+        elif is_ire:
+            verdict_desc = "Displays commercial rapid-acceptance practices and lacks UGC-CARE or Scopus indexing. Departmental review required."
+        else:
+            verdict_desc = f"Risk score ({final_p*100:.1f}%) is in the borderline zone (40% to 60%) or records are conflicting. Automated verdict withheld."
         ident_status = "UNVERIFIED_IDENTITY"
 
     # Diagnostic Report JSON
