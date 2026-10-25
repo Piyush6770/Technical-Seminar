@@ -1,33 +1,51 @@
 # Cost-Aware Progressive Predatory Journal Detection
 
-[![Paper](https://img.shields.io/badge/IEEE%20Format-7%20Pages%20Verified-blue.svg)](research_paper/research_paper.pdf)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-green.svg)](https://www.python.org/)
+[![IEEE Paper](https://img.shields.io/badge/IEEE%20Paper-7%20Pages%20Camera%20Ready-blue.svg)](research_paper/research_paper.pdf)
+[![Seminar Report](https://img.shields.io/badge/PCCOE%20Report-30--40%20Pages%20Verified-darkgreen.svg)](reports/Technical_Seminar_Report.docx)
+[![Literature Survey](https://img.shields.io/badge/Literature%20Survey-20%20Papers%20Excel-orange.svg)](reports/Literature_Survey.xlsx)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.1.2-red.svg)](https://pytorch.org/)
-[![Dashboard](https://img.shields.io/badge/Streamlit-Interactive%20UI-FF4B4B.svg)](http://localhost:8501)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-teal.svg)](src/api_server.py)
+[![React](https://img.shields.io/badge/React-19.3.1%20Vite-61DAFB.svg)](frontend/)
 [![Dataset](https://img.shields.io/badge/Audited%20Corpus-5%2C528%20Serials-orange.svg)](audit/splits/)
-[![SHA-256](https://img.shields.io/badge/SHA--256-Frozen%20Splits-blueviolet.svg)](audit/data/)
+[![SHA-256](https://img.shields.io/badge/SHA--256-d775c92c...-blueviolet.svg)](audit/data/)
 
 ---
 
 ## 1. Executive Summary & Project Purpose
 
 ### What Is This Project?
-This project is an end-to-end, production-grade scientific forensic framework and research publication system designed to identify fraudulent, deceptive, and predatory academic journals. It couples **cost-aware progressive feature acquisition**, **out-of-distribution temporal generalization**, **calibrated neural early stopping**, and **deterministic registry evidence grounding** into a unified, high-throughput auditing pipeline.
+This project is an end-to-end, production-grade scientific forensic framework and research publication system engineered to detect fraudulent, deceptive, and predatory academic journals. It resolves the core vulnerabilities of automated predatory publishing inspection by unifying:
+1. **Cost-Aware Progressive Feature Acquisition** (4-stage latency-bounded hierarchy),
+2. **Out-of-Distribution Temporal Generalization** (benchmarking across pre-2021 historical and 2021–2026 contemporary cohorts),
+3. **Calibrated Neural Early Stopping** (stopping inference when calibrated posterior confidence satisfies a Pareto cost-error threshold), and
+4. **Deterministic Registry Provenance Grounding** (verifying claims directly against Crossref, DOAJ, OpenAlex, and official ISSN portals with tri-state selective triage).
 
-### Why Did We Build This? (The Motivation & The Research Gap)
-The rapid commercialization of Open Access publishing and author-facing Article Processing Charges (APCs) has spawned an illicit multi-million-dollar industry of predatory academic journals and paper mills. Over 10,000 deceptive serials currently solicit manuscripts globally, promising nominal peer review within days, pocketing author fees, and publishing fraudulent, unvetted clinical and engineering studies.
-
-Prior automated machine-learning approaches failed in operational deployment due to **three fatal structural flaws**:
-
-1. **The Static In-Distribution Fallacy**: Existing literature regularly reports diagnostic metrics exceeding $95\%$ using standard, identically distributed ($i.i.d.$) cross-validation on historical static snapshots (e.g., pre-2020 crawls of Beall's list). However, deceptive publishing is an adversarial, non-stationary domain. Deceptive publishers constantly evolve: post-2020 operations adopt modern CMS software (such as Open Journal Systems), register credible academic-sounding domain names, and forge editorial board affiliations. Classifiers fitted on historical heuristics collapse when confronted with contemporary journals ($F_1^{\text{temporal}} / F_1^{\text{historical}} = 0.5354$).
-2. **The Uniform Acquisition Cost Fallacy**: Traditional models assume all features are instantaneously available at zero cost. In reality, evaluating local URL string geometry takes less than $10$ milliseconds, whereas headless browser JavaScript DOM rendering takes $3$ to $5$ seconds, and querying external scholarly registries (Crossref, OpenAlex, DOAJ, ISSN Portal) requires multiple network round-trips subject to rate limits and API downtime ($9,310$ ms total). Indiscriminately invoking exhaustive web scraping and API calls for millions of serials is computationally and financially unfeasible.
-3. **The Ungrounded Black-Box Prediction Fallacy**: Existing models emit raw, uncalibrated scalar risk probabilities (e.g., $\hat{p} = 0.82$) without verifiable evidence grounding. In academic tenure disputes or legal defamation proceedings, an opaque probability score provides zero actionable standing. Crucially, when evidence is noisy or ambiguous ($0.40 \le p \le 0.60$), autonomous systems must be capable of **selective abstention** (routing the record to human expert librarians) rather than forcing an arbitrary algorithmic verdict.
-
-This repository provides the full, reproducible codebase, audited temporal benchmarks, neural checkpoints, Streamlit diagnostic interface, and IEEE-format research paper addressing these three structural challenges.
+### Academic & Institutional Affiliation
+- **Institution**: Department of Computer Engineering, Pimpri Chinchwad College of Engineering (PCCOE), Pune, India
+- **Group ID**: GB11
+- **Guide**: Prof. Dr. Swati V. Shinde
+- **Authors / Team**:
+  - Pratik Jadhav (`pratik.jadhav24@pccoepune.org`)
+  - Suyog Jadhav (`suyog.jadhav24@pccoepune.org`)
+  - Piyush Patel (`piyush.patel24@pccoepune.org`)
+  - Parshwa Nikam (`parshwa.nikam24@pccoepune.org`)
 
 ---
 
-## 2. Core Architectural Framework
+## 2. The Three Structural Failure Modes in Existing Literature
+
+Prior automated predatory journal detection systems (such as the Academic Journal Predatory Checking — AJPC system [7]) reported classification accuracies exceeding 95% on static benchmarks. However, independent forensic audits by Teixeira da Silva (2025) [8] revealed that these systems fail catastrophically in operational deployment due to three structural flaws:
+
+1. **The Static In-Distribution Fallacy**: Models evaluated solely with $i.i.d.$ cross-validation on static historical data (pre-2020 crawls) collapse when deployed on contemporary serials. Predatory publishers adapt dynamically: adopting modern Open Journal Systems (OJS) platforms, commercial-sounding academic domains, real scholar names on fabricated editorial boards, and formal APC schedules. Our empirical findings prove a severe longitudinal collapse: performance drops from $F_1 = 0.9949$ (historical validation) to $F_1 = 0.5327$ (temporal test), establishing an empirical **Temporal Generalization Ratio of 0.5354**.
+2. **The Uniform Acquisition Cost & Server Crash Fallacy**: Prior frameworks assume every environmental signal is available with zero latency. In reality, local URL geometry takes $<10$ ms, whereas headless browser DOM rendering takes $3$ to $5$ seconds, and querying external scholarly APIs requires multiple network hops ($9,310$ ms total). Synchronous exhaustive scraping exhausts system resources, causing central server crashes and prolonged downtimes [8].
+3. **The Ungrounded Black-Box Score Fallacy**: Prior models emit raw, uncalibrated scalar probabilities without factual provenance, causing erratic classification flips across internal journal pages [8]. In academic tenure reviews and legal disputes, opaque scores carry no legal standing. Our framework introduces **deterministic evidence grounding** and **tri-state selective triage** ($0.40 \le \hat{p} \le 0.60$), withholding autonomous verdicts on ambiguous serials and routing them to human expert librarians.
+
+---
+
+## 3. Four-Stage Progressive Acquisition Hierarchy (42 Features)
+
+Features are partitioned into four modular, progressively evaluated stages with persistent disk caching:
 
 ```
                           [Query Input: Journal URL, Title, ISSN, Publisher]
@@ -72,14 +90,8 @@ This repository provides the full, reproducible codebase, audited temporal bench
                                                                             /               |                \
                                                                            ▼                ▼                 ▼
                                                                     Verified Whitelist   Selective Human     Predatory Warning
-                                                                       (p ≤ 0.40)       Audit (0.40–0.60)       (p ≥ 0.60)
+                                                                       (p̂ ≤ 0.40)       Audit (0.40–0.60)       (p̂ ≥ 0.60)
 ```
-
----
-
-## 3. Four-Stage Feature Hierarchy (42 Features)
-
-Features are decoupled into four modular, progressively evaluated stages with persistent disk caching (`src/features/cache.py`):
 
 | Stage | Feature Group | Dim | Latency Bound | Core Signals Extracted | Adversarial Evasion Resistance |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -93,41 +105,42 @@ Features are decoupled into four modular, progressively evaluated stages with pe
 ## 4. Key Scientific Innovations
 
 ### 1. Shared Progressive Representation Learning
-Rather than training independent, decoupled classifiers for each stage, we design a shared progressive neural network in PyTorch (`src/models/multi_head_model.py`). The network maintains an internal hidden state $\mathbf{h}_k$ that accumulates representations across stages:
+Rather than training independent stage classifiers, we design a shared progressive neural network in PyTorch (`src/models/multi_head_model.py`). The model maintains an internal hidden state $\mathbf{h}_k$ that accumulates representations across stages:
 $$\mathbf{h}_1 = \text{ReLU}(\mathbf{W}_1 \mathbf{x}_1 + \mathbf{b}_1)$$
 $$\mathbf{h}_k = \text{ReLU}(\mathbf{W}_k [\mathbf{h}_{k-1}; \mathbf{x}_k] + \mathbf{b}_k) \quad \text{for } k \in \{2, 3, 4\}$$
-Each stage outputs a posterior risk probability $p_k = \sigma(\mathbf{V}_k \mathbf{h}_k)$. During training, a composite multi-task objective updates all heads simultaneously:
-$$\mathcal{L}_{\text{total}} = \sum_{k=1}^4 \alpha_k \mathcal{L}_{\text{CE}}(p_k, y)$$
-**Why this matters**: Shared representation learning forces early layers to learn generalizable features and acts as an effective regularizer, completely preventing the catastrophic tabular collapse suffered by standard tree models (XGBoost $F_1 = 0.0904$) under temporal shift.
+All hidden dimensions are projected to $h = 64$. A composite multi-task objective updates all heads simultaneously:
+$$\mathcal{L}_{\text{total}} = \sum_{k=1}^4 \alpha_k \mathcal{L}_{\text{CE}}(\hat{p}_k, y)$$
+**Significance**: Multi-task gradient feedback forces early layers to learn generalizable representations, completely preventing the catastrophic tabular collapse suffered by standard tree models (XGBoost $F_1 = 0.0904$).
 
 ### 2. Calibrated Early Stopping & Pareto Efficiency
 At each stage $k$, the stopping controller evaluates the calibrated posterior confidence:
-$$c_k = \max(p_k, 1 - p_k)$$
-Inference halts dynamically at stage $k$ once $c_k \ge \tau_k$. Optimized thresholds ($\tau_1 = 0.80, \tau_2 = 0.80, \tau_3 = 0.75$) resolve **36.3%** of serials at Stage 1 and **63.7%** at Stage 2, achieving a **94.4% reduction in mean inference latency** ($519$ ms vs. $9,310$ ms) while outperforming full monolithic acquisition ($F_1 = 0.5327$ vs. $0.4560$).
+$$c_k = \max(\hat{p}_k, 1 - \hat{p}_k)$$
+Inference halts dynamically at stage $k$ once $c_k \ge \tau_k$. Optimized thresholds ($\tau_1 = 0.80, \tau_2 = 0.80, \tau_3 = 0.75$) resolve **36.3%** of serials at Stage 1 and **63.7%** at Stage 2, slashing mean inference latency by **94.4%** ($519.0$ ms vs. $9,310.0$ ms) while improving out-of-distribution generalization ($F_1 = 0.5327$ vs. $0.4560$).
 
-### 3. Temperature Scaling & Probability Calibration
-Uncalibrated neural networks emit extreme probabilities ($\hat{p} > 0.99$) on out-of-distribution inputs. We apply Platt scaling and temperature scaling (`src/models/calibration.py`), reducing Expected Calibration Error (ECE) from **0.4619** down to **0.3079**, ensuring that early exits occur only on statistically reliable confidence.
+### 3. Probability Calibration via Platt & Temperature Scaling
+Uncalibrated neural networks emit overconfident probabilities on shifted data. We apply Platt scaling and temperature scaling (`src/models/calibration.py`), reducing Expected Calibration Error (ECE) from **0.4619** down to **0.3079**, ensuring that stopping decisions rely on statistically sound confidence.
 
 ### 4. Tri-State Classification & Selective Abstention
-Instead of forcing binary predictions on ambiguous records, the system enforces a principled reject option (`src/models/stopping_controller.py`):
-- $p \ge 0.60 \implies$ **Predatory Warning** (Flagged with explicit risk evidence).
-- $0.40 < p < 0.60 \implies$ **Selective Abstention** (Autonomous verdict withheld; routed to human expert librarian review).
-- $p \le 0.40 \implies$ **Verified Legitimate** (Whitelisted with corroborated provenance).
-Routing ambiguous cases to human review resolves $87.2\%$ of serials autonomously while slashing the false positive rate from $29.9\%$ down to **$13.8\%$**.
+The system enforces a principled reject option (`src/models/stopping_controller.py`):
+- $\hat{p} \ge 0.60 \implies$ **Predatory Warning** (Emitted with explicit forensic risk indicators).
+- $0.40 < \hat{p} < 0.60 \implies$ **Selective Abstention** (Autonomous verdict withheld; routed to human expert librarians).
+- $\hat{p} \le 0.40 \implies$ **Verified Legitimate** (Whitelisted with corroborated registry provenance).
+
+Routing ambiguous cases to human review achieves $87.2\%$ autonomous coverage while dropping the false positive rate from $29.9\%$ down to **$13.8\%$** (and boosting Macro-$F_1$ on covered records to **$0.6420$**).
 
 ---
 
 ## 5. Audited Dataset Partitions
 
-To guarantee strict reproducibility, all experiments operate on an audited corpus of **5,528 academic serials** frozen under SHA-256 integrity digests:
+To ensure strict reproducibility, all experiments operate on an audited corpus of **5,528 academic serials** frozen under SHA-256 integrity digests:
 - **Master Frozen File**: `audit/data/final_combined_journal_dataset_frozen_readonly.csv` (`SHA-256: d775c92cbda31fdc72c45b4f473e45de6bf0580f31d8ac61e960df8894c4f328`)
 
 | Split Name | Era | Total Records | Legitimate ($y=0$) | Predatory ($y=1$) | Primary Scientific Function |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **`HISTORICAL_TRAIN`** | Pre-2021 | 1,636 | 982 (60.0%) | 654 (40.0%) | Model parameter fitting and shared representation learning |
+| **`HISTORICAL_TRAIN`** | Pre-2021 | 1,636 | 982 (60.0%) | 654 (40.0%) | Model parameter fitting and representation learning |
 | **`HISTORICAL_VAL`** | Pre-2021 | 410 | 245 (59.8%) | 165 (40.2%) | Hyperparameter optimization and Platt calibration |
 | **`TEMPORAL_TEST_UNTOUCHED`** | **2021–2026** | **1,800** | **1,621 (90.1%)** | **179 (9.9%)** | **Strictly held-out out-of-distribution temporal evaluation** |
-| **`WEB_NOISE_POOL`** | Mixed | 1,272 | 1,145 (90.0%) | 127 (10.0%) | Adversarial stress testing and robustness evaluation |
+| **`UNCERTAIN_POOL`** | Mixed | 1,682 | 1,145 (68.1%) | 537 (31.9%) | Quarantined for manual QC audit |
 | **Total Corpus** | **2012–2026** | **5,528** | **3,993 (72.2%)** | **1,535 (27.8%)** | **Complete Audited Research Corpus** |
 
 ---
@@ -137,7 +150,7 @@ To guarantee strict reproducibility, all experiments operate on an audited corpu
 All quantitative evaluations were executed on the untouched 1,800-record contemporary temporal cohort:
 
 | Exp ID | Evaluation Configuration | Precision | Recall | Macro-$F_1$ | Predatory $F_1$ | Specificity | ROC-AUC | Mean Latency | Stage Resolution |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **E1** | Group A Only (URL Geometry) | 0.1233 | 0.4078 | 0.4842 | 0.1894 | 0.6798 | 0.5721 | **10.0 ms** | 100% at Stage 1 |
 | **E2** | Monolithic Full (A+B+C+D) | 0.1463 | 0.7542 | 0.4560 | 0.2450 | 0.5139 | 0.6326 | 9,310.0 ms | 100% at Stage 4 |
 | **E3** | **Adaptive Progressive (Proposed)** | **0.1724** | **0.5642** | **0.5327** | **0.2641** | **0.7008** | **0.6771** | **519.0 ms** | **36.3% S1, 63.7% S2** |
@@ -149,59 +162,62 @@ All quantitative evaluations were executed on the untouched 1,800-record contemp
 | **E5-R** | Stage 4 Independent Random Forest | 0.1038 | 1.0000 | 0.1388 | 0.1881 | 0.0469 | 0.5997 | 9,310.0 ms | 100% at Stage 4 |
 | **E6-H** | Historical In-Distribution Val | 1.0000 | 0.9880 | 0.9949 | 0.9940 | 1.0000 | 0.9951 | 426.0 ms | In-Distribution Base |
 
-### Key Empirical Findings:
-1. **94.4% Latency Reduction**: The proposed adaptive controller (E3) resolves candidates in **519.0 ms** on average, eliminating 94.4% of computational overhead compared to monolithic scraping (9,310.0 ms).
-2. **Improved Generalization**: Pruning uninformative downstream signals on decisive cases improves temporal Macro-$F_1$ from 0.4560 to **0.5327**.
-3. **Catastrophic Tabular Collapse Proven**: Tree-based baselines fitted on historical registry correlations collapse under temporal drift (XGBoost Macro-$F_1 = 0.0904$, Specificity = 0.0000), whereas our shared neural architecture maintains balanced discriminative power.
-4. **Quantified Temporal Drift**: Longitudinal drift degrades diagnostic performance from $0.9949$ to $0.5327$, yielding a reproducible **Temporal Generalization Ratio of 0.5354**.
+### Key Findings:
+1. **94.4% Latency Reduction**: Resolves serials in **519.0 ms** on average, eliminating 94.4% of latency compared to monolithic scraping (9,310.0 ms).
+2. **Improved Generalization**: Pruning downstream uninformative signals on decisive cases improves temporal Macro-$F_1$ from 0.4560 to **0.5327**.
+3. **Catastrophic Tabular Collapse Overcome**: Standard tree models collapse under temporal drift (XGBoost $F_1 = 0.0904$, Specificity = $0.0000$), whereas our shared neural model maintains balanced discriminative power.
+4. **Empirically Proven Temporal Collapse**: Longitudinal drift degrades Macro-$F_1$ from $0.9949$ to $0.5327$, yielding a reproducible **Temporal Generalization Ratio of 0.5354**.
 
 ---
 
-## 7. Repository Directory Structure
+## 7. Project Deliverables & Repository Structure
 
 ```
-├── audit/                                 # Audited dataset splits & cryptographic digests
-│   ├── data/                              # Master frozen dataset CSV (SHA-256 verified)
-│   └── splits/                            # Historical train/val, temporal test, noise pool splits
-├── artifacts/                             # Experimental outputs & generated reports
-│   ├── models/                            # Trained neural weights & calibration checkpoints
-│   └── reports/                           # benchmark_results.json & benchmark_report.md
-├── reports/                               # College Technical Seminar Report & Documentation
+├── reports/                               # College Technical Seminar Report (PCCOE Format)
 │   ├── Technical_Seminar_Report.docx      # 30-40 page PCCOE Technical Seminar Report
 │   ├── Literature_Survey.xlsx             # Complete 20-paper comparative survey spreadsheet
-│   └── figures/                           # Embedded report diagrams & PCCOE emblem
+│   ├── Technical_Seminar_Report.md        # Full Markdown version for reading & review
+│   └── figures/                           # Embedded report diagrams & official PCCOE logo
 ├── research_paper/                        # IEEE Research Paper Source & Reference Library
 │   ├── research_paper.docx                # IEEE 2-column camera-ready paper (10pt, 7 pages)
 │   ├── research_paper.pdf                 # Final 7-page IEEE two-column publication PDF
 │   ├── research_paper.md                  # Canonical Markdown research manuscript
 │   ├── Literature_Survey.xlsx             # Comprehensive 20-paper literature survey
+│   ├── EVIDENCE_AND_PROOF_OF_RESULTS.md   # Mathematical proofs, CLI audits, and SHA-256 hashes
 │   ├── reference_papers/                  # Complete library of 20 authentic publisher PDFs
-│   └── figures/                           # 300 DPI publication PNGs & vector PDFs (Figs 1–7)
-├── scripts/                               # Automation & compilation scripts
-│   ├── redesign_publication_diagrams.py   # Generates all 7 clean publication figures
-│   ├── strip_all_dollars_and_format_math.py # ReportLab Platypus IEEE PDF compiler
-│   └── prepare_audit_dataset.py           # Dataset split partitioner and checksum auditor
-├── src/                                   # Core Python application source code
+│   └── figures/                           # 300 DPI scientific benchmark charts (Figs 1–7)
+├── paper/                                 # LaTeX Manuscript & IEEE Bibliography
+│   ├── manuscript.tex                     # LaTeX IEEE format source
+│   ├── references.bib                     # 20 strictly sequential IEEE citations
+│   └── figures/                           # Vector PDFs & PNG diagrams (Figs 1–7)
+├── frontend/                              # Interactive React 19 + Vite Web Application
+│   ├── src/App.jsx                        # 5-tab UI (Single Audit, Batch, Benchmarks, Cohorts, Architecture)
+│   ├── package.json                       # React 19 dependencies & scripts
+│   └── dist/                              # Pre-built production bundle served by FastAPI
+├── src/                                   # Production Python source code
+│   ├── api_server.py                      # FastAPI REST backend server
 │   ├── config.py                          # Global paths, thresholds, and TLD lists
-│   ├── explainability/                    # Deterministic evidence grounding & audit logs
-│   │   └── evidence_grounding.py          # Corroboration and contradiction rule engine
+│   ├── explainability/                    # Evidence grounding & diagnostic reporting
 │   ├── features/                          # 4-stage progressive feature extraction
-│   │   ├── cache.py                       # Persistent feature disk cache (SQLite / JSON)
-│   │   ├── group_a_url.py                 # 16 URL & domain geometry features (< 10 ms)
-│   │   ├── group_b_html.py                # 13 static HTML structure & policy features (~ 0.8s)
-│   │   ├── group_c_dynamic.py             # 6 dynamic JS runtime & DOM delta features (~ 3.5s)
-│   │   ├── group_d_scholarly.py           # 7 Crossref, DOAJ, OpenAlex registry features (~ 5.0s)
-│   │   └── pipeline.py                    # Unified sequential feature extraction pipeline
-│   ├── models/                            # PyTorch neural models & controllers
-│   │   ├── multi_head_model.py            # Shared progressive multi-head neural network
+│   │   ├── group_a_url.py                 # Stage 1: URL geometry features (< 10 ms)
+│   │   ├── group_b_html.py                # Stage 2: HTML policy features (~ 0.8s)
+│   │   ├── group_c_dynamic.py             # Stage 3: Dynamic JS DOM features (~ 3.5s)
+│   │   ├── group_d_scholarly.py           # Stage 4: External registry features (~ 5.0s)
+│   │   └── pipeline.py                    # Unified sequential feature pipeline
+│   ├── models/                            # PyTorch progressive neural model & controller
+│   │   ├── multi_head_model.py            # Shared multi-head neural network
 │   │   ├── stopping_controller.py         # Calibrated entropy-bounded early stopping
 │   │   ├── calibration.py                 # Platt scaling & Expected Calibration Error
 │   │   └── baselines.py                   # Decoupled XGBoost & Random Forest baselines
-│   └── ui/                                # Interactive user interface
-│       └── app.py                         # Streamlit multi-tab diagnostic dashboard
-├── tests/                                 # Automated unit and integration test suite
-├── requirements.txt                       # Python package dependencies
-└── README.md                              # Project documentation
+│   └── evaluation/                        # Empirical benchmark runners & metrics
+├── audit/                                 # Audited dataset splits & cryptographic digests
+│   ├── data/                              # Master frozen dataset CSV (SHA-256 verified)
+│   └── splits/                            # Historical train/val, temporal test, noise pool splits
+├── artifacts/                             # Experimental outputs & trained models
+│   ├── models/                            # PyTorch progressive weights & scalers
+│   └── reports/                           # benchmark_results.json & benchmark_report.md
+├── scripts/                               # Automation, verification, and compilation scripts
+└── tests/                                 # Automated test suite
 ```
 
 ---
@@ -211,55 +227,55 @@ All quantitative evaluations were executed on the untouched 1,800-record contemp
 ### 1. Environment Setup
 Clone the repository and install the dependencies:
 ```bash
-git clone https://github.com/suyog-jadhav/MIT-WPU-Hackathon.git
-cd MIT-WPU-Hackathon
+git clone https://github.com/Piyush6770/Technical-Seminar.git
+cd Technical-Seminar
 pip install -r requirements.txt
 ```
 
 ### 2. Verify Dataset Integrity
 Verify that all dataset cohorts match their frozen SHA-256 digests:
 ```bash
-python scripts/prepare_audit_dataset.py
+python scripts/verify_integrity.py
 ```
 
-### 3. Run Experimental Benchmark Suite (E1 – E6)
-Execute the complete empirical benchmark across all 5,528 serials:
+### 3. Run the Full-Stack Web Application
+Start the FastAPI backend server (which automatically serves the built React frontend):
+```bash
+python -m uvicorn src.api_server:app --host 127.0.0.1 --port 8000
+```
+Open your browser at `http://127.0.0.1:8000` to access:
+- **Single Journal Audit**: Real-time progressive audit with risk score gauge, confidence bounds, early-exit stage indicator, and factual evidence logs.
+- **Batch Screening**: Bulk auditing across CSV files with confusion matrices and exportable results.
+- **Benchmark Dashboard**: Live visualization of Pareto latency frontiers, stage resolution distributions, and calibration reliability diagrams.
+- **Dataset Cohorts Explorer**: Browse frozen historical and temporal cohorts with cryptographic SHA-256 digests.
+- **Architecture Explorer**: Interactive diagram of the 4-stage feature hierarchy and shared neural network.
+
+Alternatively, to run the frontend in Vite development mode:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### 4. Run Experimental Benchmarks (E1 – E6)
+Execute the complete empirical benchmark suite across all 5,528 serials:
 ```bash
 python -m src.evaluation.run_benchmarks
 ```
-Benchmark metrics, confusion matrices, reliability diagrams, and latency statistics will be generated and saved in `artifacts/reports/benchmark_results.json`.
+Metrics and latency statistics are saved to `artifacts/reports/benchmark_results.json`.
 
-### 4. Regenerate Clean Publication Figures
-To regenerate all 7 figures directly from `benchmark_results.json`:
-```bash
-python scripts/redesign_publication_diagrams.py
-```
-Outputs high-resolution 300 DPI PNGs and vector PDFs in `research_paper/figures/`.
-
-### 5. Compile the IEEE Research Paper PDF
-To recompile the canonical 7-page IEEE two-column paper:
-```bash
-python scripts/strip_all_dollars_and_format_math.py
-```
-Generates `research_paper/research_paper.pdf` with verified typography, sequential ascending citations `[1]–[29]`, and zero raw formatting artifacts.
-
-### 6. Launch the Interactive Diagnostic Dashboard
-Start the Streamlit web application:
-```bash
-streamlit run src/ui/app.py
-```
-Open your browser at `http://localhost:8501` to access:
-- **Single Journal Inspector**: Enter any journal URL/ISSN for real-time progressive auditing with evidence provenance logs.
-- **Batch CSV Auditing**: Upload a list of ISSNs/URLs for high-throughput automated classification.
-- **Audited Dataset Explorer**: Inspect records across historical and contemporary cohorts.
-- **Empirical Benchmark Matrix**: Interactive exploration of latency frontiers and diagnostic metrics.
+### 5. Access Seminar Report & Literature Survey
+- **Technical Seminar Report**: Open [`reports/Technical_Seminar_Report.docx`](reports/Technical_Seminar_Report.docx) for the complete 30–40 page PCCOE-formatted seminar report.
+- **Literature Survey Excel**: Open [`reports/Literature_Survey.xlsx`](reports/Literature_Survey.xlsx) for the comprehensive 20-paper comparative matrix with all 10 academic criteria.
+- **Research Paper**: Open [`research_paper/research_paper.pdf`](research_paper/research_paper.pdf) or [`research_paper/research_paper.docx`](research_paper/research_paper.docx) for the 7-page IEEE 2-column paper.
+- **Authentic Reference Library**: Access all 20 downloaded publisher PDFs in [`research_paper/reference_papers/`](research_paper/reference_papers/).
 
 ---
 
-## 9. Ethical, Legal & Practical Safeguards
+## 9. Ethical, Legal & Global South Safeguards
 
-1. **Defamation & Legal Liability**: Academic blacklist curators (such as Jeffrey Beall) historically faced legal threats and subjective disputes. Our architecture replaces opaque algorithmic verdicts with **verifiable factual provenance**—explicitly citing official registry discrepancies (e.g., verifying whether an ISSN is registered in the official portal or whether claimed indexing exists in DOAJ).
-2. **Protection for Emerging Global South Venues**: Static heuristics frequently misclassify legitimate academic publications from developing nations (Africa, Latin America, South Asia) that operate on limited budgets without commercial DOI infrastructure. Through **selective abstention**, borderline records ($0.40 \le p \le 0.60$) are withheld from automated blacklisting and routed to human expert librarians.
+1. **Defamation & Legal Liability**: Blacklist curators historically faced defamation lawsuits. Our architecture replaces opaque algorithmic verdicts with **verifiable factual provenance**—explicitly citing official registry discrepancies (e.g., verifying whether an ISSN is registered in the official portal or whether claimed indexing exists in DOAJ).
+2. **Protection for Emerging Global South Venues**: Static classifiers discriminate against legitimate academic journals from developing regions (Africa, Latin America, South Asia) that operate on limited budgets without commercial DOI infrastructure. Through **selective abstention**, borderline records ($0.40 \le \hat{p} \le 0.60$) are withheld from automated blacklisting and routed to human expert librarians.
 
 ---
 
@@ -281,4 +297,4 @@ If you use this codebase, benchmark datasets, or progressive architecture in you
 
 ## 11. License
 
-This project is licensed under the Apache 2.0 License. All benchmark splits, checkpoints, and documentation are made openly available for non-commercial scholarly integrity research.
+This project is licensed under the Apache 2.0 License. All benchmark splits, model weights, and documentation are openly available for non-commercial scholarly integrity research.
